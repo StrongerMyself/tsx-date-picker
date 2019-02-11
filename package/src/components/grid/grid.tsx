@@ -1,8 +1,8 @@
 import * as React from 'react'
 import moment from 'moment'
-import GridMonths from './grid-months'
-import GridWeeks from './grid-weeks'
-import GridDays from './grid-days'
+import MonthGrid from './month.grid'
+import WeekGrid from './week.grid'
+import DayGrid from './day.grid'
 
 export interface GridProps {
     date: moment.Moment
@@ -149,9 +149,9 @@ class Grid extends React.Component<GridProps, State> {
                 <div className="_body">
                     <div className="_days">
                         <div className="_row">
-                            <GridWeeks/>
+                            <WeekGrid/>
                         </div>
-                        <GridDays
+                        <DayGrid
                             date={date}
                             viewDate={this.viewDate}
                             setDate={this.setDate}
@@ -162,7 +162,7 @@ class Grid extends React.Component<GridProps, State> {
                         />
                     </div>
                     <div className="_months">
-                        <GridMonths
+                        <MonthGrid
                             viewDate={this.viewDate}
                             setView={this.setMonthView}
                             disablePast={disablePast}

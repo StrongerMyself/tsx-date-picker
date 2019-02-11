@@ -13,7 +13,7 @@ interface Props {
 
 }
 
-class GridDays extends React.Component<Props, {}> {
+class DayGrid extends React.Component<Props, {}> {
 
     renderDate: moment.Moment
 
@@ -83,4 +83,4 @@ class GridDays extends React.Component<Props, {}> {
     }
 }
 
-export default GridDays
+export default DayGrid

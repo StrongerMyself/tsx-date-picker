@@ -3,7 +3,7 @@ import moment from 'moment'
 
 interface Props {}
 
-class GridWeeks extends React.Component<Props, {}> {
+class WeekGrid extends React.Component<Props, {}> {
 
     static defaultProps = {}
 
@@ -31,4 +31,4 @@ class GridWeeks extends React.Component<Props, {}> {
     }
 }
 
-export default GridWeeks
+export default WeekGrid

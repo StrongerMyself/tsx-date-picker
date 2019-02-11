@@ -11,7 +11,7 @@ interface Props {
     checkSelect: (date: moment.Moment) => CheckDate
 }
 
-class GridMonths extends React.Component<Props, {}> {
+class MonthGrid extends React.Component<Props, {}> {
 
     static defaultProps = {
         viewDate: moment(),
@@ -64,4 +64,4 @@ class GridMonths extends React.Component<Props, {}> {
     }
 }
 
-export default GridMonths
+export default MonthGrid
