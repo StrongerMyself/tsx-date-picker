@@ -16,7 +16,6 @@ class AppComponent extends React.Component<IProps, IState> {
 	}
 
 	onChange = (key = 'date') => (date, format) => {
-		console.log({key, date})
 		this.setState({[key]: moment(date, format)})
 	}
 

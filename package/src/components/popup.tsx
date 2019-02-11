@@ -24,7 +24,9 @@ class PopupDatepicker extends React.Component<Props, {}> {
         let { hide, refWrap, onToggle } = this.props
         let outSideRef = refWrap ? refWrap.current : this.refPopup.current
         let containState = outSideRef.contains(e.target)
-        if(!hide && !containState) onToggle(false)
+        if(!hide && !containState) {
+            onToggle(true)
+        }
     }
 
     get className() {

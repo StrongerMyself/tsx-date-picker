@@ -14,8 +14,6 @@ export interface GridProps {
 interface State {
     layer: Layers
     viewDate: moment.Moment
-    addMonth: number
-    addYear: number
 }
 
 enum Layers {
@@ -39,8 +37,14 @@ class Grid extends React.Component<GridProps, State> {
     state = {
         layer: Layers.day,
         viewDate: moment(this.props.date),
-        addMonth: 0,
-        addYear: 0,
+    }
+
+    componentDidUpdate(prevProps) {
+        let prevDateStr = prevProps.date.format('YYYY-MM-DD')
+        let nextDateStr = this.props.date.format('YYYY-MM-DD')
+        if (prevDateStr !== nextDateStr) {
+            this.setState({viewDate: moment(this.props.date)})
+        }
     }
 
     toggleView() {
@@ -104,7 +108,7 @@ class Grid extends React.Component<GridProps, State> {
     onClickArr = (i) => () => {
         let { layer, viewDate } = this.state
         if (layer === Layers.day) viewDate.add(i, 'M')
-        if (layer === Layers.month) viewDate.add(i, 'd')
+        if (layer === Layers.month) viewDate.add(i, 'y')
         this.setState({ viewDate })
     }
 
