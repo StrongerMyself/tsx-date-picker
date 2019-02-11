@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import Grid, { GridProps } from './grid'
+import Grid, { GridProps } from './grid/grid'
 
 interface Props extends GridProps {
     hide: boolean

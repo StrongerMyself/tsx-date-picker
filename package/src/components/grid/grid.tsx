@@ -35,14 +35,10 @@ class Grid extends React.Component<GridProps, State> {
         date: moment(),
         format: 'DD-MM-YYYY',
     }
-    
-    date: moment.Moment
-    nowDate: moment.Moment
-    viewDate: moment.Moment
-    
+        
     state = {
-        viewDate: this.props.date || moment(),
         layer: Layers.day,
+        viewDate: moment(this.props.date),
         addMonth: 0,
         addYear: 0,
     }
@@ -57,25 +53,17 @@ class Grid extends React.Component<GridProps, State> {
         this.setState({layer})
     }
     
-    initDate() {
-        let { date, format } = this.props
-        let { addMonth, addYear } = this.state
-        this.nowDate = moment()
-        this.viewDate = moment(date)
-            .add(addMonth, 'month')
-            .add(addYear, 'year')
-    }
-
     checkPast = (date: moment.Moment): boolean => {
-        let now = this.nowDate.format('YYYY-MM-DD')
+        let now = moment().format('YYYY-MM-DD')
         let check = date.format('YYYY-MM-DD')
         return moment(check).isBefore(now)
     }
 
     checkNow = (date: moment.Moment): CheckDate => {
-        let yearState = date.year() === this.nowDate.year()
-        let monthState = date.month() === this.nowDate.month()
-        let dayState = date.date() === this.nowDate.date()
+        let nowDate = moment()
+        let yearState = date.year() === nowDate.year()
+        let monthState = date.month() === nowDate.month()
+        let dayState = date.date() === nowDate.date()
         return {
             year: (yearState),
             month: (yearState && monthState),
@@ -98,24 +86,26 @@ class Grid extends React.Component<GridProps, State> {
     setDate = (date) => {
         let { onChange, format, disablePast } = this.props
         let pastState = disablePast ? this.checkPast(date) : false
+        let viewDate = moment(date)
         if (!pastState) {
-            this.setState({ addMonth: 0, addYear: 0 }, () => {
+            this.setState({ viewDate }, () => {
                 onChange(date, format)
             })
         }
     }
 
     setMonthView = (inDate) => {
-        let { date } = this.props
-        let offsetM = inDate.month() - date.month()
-        this.setState({ addMonth: offsetM, layer: Layers.day })
+        let { viewDate } = this.state
+        let offsetM = inDate.month() - viewDate.month()
+        viewDate.add(offsetM, 'M')
+        this.setState({ viewDate, layer: Layers.day })
     }
     
     onClickArr = (i) => () => {
-        let { layer, addMonth, addYear } = this.state
-        if (layer === Layers.day) addMonth += i
-        if (layer === Layers.month) addYear += i
-        this.setState({ addMonth, addYear })
+        let { layer, viewDate } = this.state
+        if (layer === Layers.day) viewDate.add(i, 'M')
+        if (layer === Layers.month) viewDate.add(i, 'd')
+        this.setState({ viewDate })
     }
 
     get className() {
@@ -127,11 +117,11 @@ class Grid extends React.Component<GridProps, State> {
     }
 
     render() {
-        this.initDate()
+        let { viewDate } = this.state
         let { disablePast, date } = this.props
-        let month = this.viewDate.month()
+        let month = viewDate.month()
         let monthStr = moment.months(month)
-        let year = this.viewDate.year()
+        let year = viewDate.year()
         return (
             <div className={this.className}>
                 <div className="_top">
@@ -153,7 +143,7 @@ class Grid extends React.Component<GridProps, State> {
                         </div>
                         <DayGrid
                             date={date}
-                            viewDate={this.viewDate}
+                            viewDate={viewDate}
                             setDate={this.setDate}
                             disablePast={disablePast}
                             checkNow={this.checkNow}
@@ -163,7 +153,7 @@ class Grid extends React.Component<GridProps, State> {
                     </div>
                     <div className="_months">
                         <MonthGrid
-                            viewDate={this.viewDate}
+                            viewDate={viewDate}
                             setView={this.setMonthView}
                             disablePast={disablePast}
                             checkNow={this.checkNow}

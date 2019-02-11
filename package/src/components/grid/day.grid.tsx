@@ -19,9 +19,9 @@ class DayGrid extends React.Component<Props, {}> {
 
     renderMonth() {
         let outElem = []
-        let { date } = this.props
-        let weekLen = date.daysInMonth() / 7 
-        this.renderDate = moment(date)
+        let { viewDate } = this.props
+        let weekLen = viewDate.daysInMonth() / 7 
+        this.renderDate = moment(viewDate)
             .startOf('month')
             .startOf('week')
         for (let i = 0; i <= weekLen; i++) {
@@ -60,9 +60,9 @@ class DayGrid extends React.Component<Props, {}> {
         let { disablePast, viewDate, checkNow, checkPast, checkSelect } = this.props
 
         let otherDay = date.month() !== viewDate.month()
-        let nowState = checkNow(date).month
+        let nowState = checkNow(date).day
         let pastState = disablePast ? checkPast(date) : false
-        let selectState = checkSelect(date).month
+        let selectState = checkSelect(date).day
         
         if (otherDay) className += ' --otherDay'
         if (nowState) className += ' --now'

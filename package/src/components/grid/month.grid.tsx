@@ -13,10 +13,6 @@ interface Props {
 
 class MonthGrid extends React.Component<Props, {}> {
 
-    static defaultProps = {
-        viewDate: moment(),
-    }
-
     renderItems() {
         let outElem = []
         let { viewDate, setView } = this.props
