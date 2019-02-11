@@ -16,11 +16,12 @@ class AppComponent extends React.Component<IProps, IState> {
 	}
 
 	onChange = (key = 'date') => (date, format) => {
+		console.log({key, date})
 		this.setState({[key]: moment(date, format)})
 	}
 
 	render() {
-		let { date } = this.state
+		let { date, dateInput } = this.state
 		return (
 			<div className="page">
 				<div className="page__body">
@@ -32,7 +33,7 @@ class AppComponent extends React.Component<IProps, IState> {
 					</div>
 					<div className="page__row">
 						<DatePickerInput
-							date={date}
+							date={dateInput}
 							onChange={this.onChange('dateInput')}
 						/>
 					</div>

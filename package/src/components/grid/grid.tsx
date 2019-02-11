@@ -89,7 +89,7 @@ class Grid extends React.Component<GridProps, State> {
         let viewDate = moment(date)
         if (!pastState) {
             this.setState({ viewDate }, () => {
-                onChange(date, format)
+                onChange(moment(date), format)
             })
         }
     }
