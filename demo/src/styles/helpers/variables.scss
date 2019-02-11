@@ -1,0 +1,46 @@
+// ----------------------------------------------------------------------
+// Font variables
+// ----------------------------------------------------------------------
+
+$baseFont: 'Roboto', Arial, sans-serif;
+$titleFont:  Arial, sans-serif;
+
+// ----------------------------------------------------------------------
+// Layout sizes
+// ----------------------------------------------------------------------
+// (x, ex) - Extra, (l, lg) - Large, (m, md) - Middle, (s, sm) - Small"
+// ----------------------------------------------------------------------
+// xxl from 2560 to ~    (4k)
+// xl  from 1440 to 2560 (large desctop)
+// lg  from 1024 to 1440 (landscape tablet, small desctop)
+// md  from 768 to 1024  (landscape mobile, portain tablet)
+// sm  from 425 to 768   (large mobile)
+// xs  from 320 to 425   (small mobile)
+// xxs from ~ to 320     (smartwatch)
+// ----------------------------------------------------------------------
+
+$padd: 30px;
+$content: 1024px;
+$maxW: $content + ($padd * 2);
+
+$padd-xs: 15px;
+$content-xs: 425px;
+$maxW-xs: $content-xs + ($padd-xs * 2);
+
+$minW: 320px;
+
+// ----------------------------------------------------------------------
+// Colors
+// ----------------------------------------------------------------------
+
+$white: #fff; 
+$black: #000; 
+
+$fontLight: $white;
+$fontDark: $black; 
+
+$bodyFont: $fontDark;
+$bodyColor: $white;
+
+$scroll_track: rgba($black, 0.2);
+$scroll_thumb: rgba($black, 0.8);
