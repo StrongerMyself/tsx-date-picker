@@ -1,0 +1,104 @@
+.dp-block
+    display: flex
+    flex-direction: column
+    width: min-content
+    user-select: none
+    ._top
+        position: relative
+        display: flex
+        align-items: center
+        justify-content: space-between
+        margin-bottom: 5px
+        &__tit
+            position: absolute
+            top: 50%
+            left: 50%
+            transform: translate(-50%, -50%)
+            font-size: 14px
+            line-height: 30px
+            text-transform: uppercase
+            color: $blue
+            cursor: pointer
+            transition: 0.3s
+        &__arr
+            cursor: pointer
+            path
+                fill: #9FA0A4
+    ._body
+        position: relative
+        width: 280px
+        height: auto
+    ._row
+        display: flex
+        align-items: center
+    ._cell
+        position: relative
+        display: flex
+        align-items: center
+        justify-content: center
+        width: 40px
+        height: 40px
+        font-size: 14px
+        outline: 1px solid #E5E5E5
+        color: $darkBlue
+        cursor: pointer
+        background-color: #fff
+        text-transform: uppercase
+        &.--week
+            text-transform: uppercase
+            color: rgba(65, 70, 88, 0.4)
+            outline: none
+            cursor: default
+        &.--otherDay,
+        &.--past
+            color: #eee
+            cursor: default
+        &.--now
+            &:after
+                content: ''
+                position: absolute
+                top: 5px
+                right: 5px
+                display: block
+                width: 5px
+                height: 5px
+                background-color: $red
+                border-radius: 10em
+        &.--select
+            color: $white
+            background-color: $blue
+
+    ._days
+        width: 100%
+        height: max-content
+        transition: 0.3s
+    ._months
+        position: absolute
+        top: 0
+        left: 0
+        width: 100%
+        height: 100%
+        padding-top: 15px
+        display: flex
+        flex-wrap: wrap
+        transition: 0.3s
+        ._cell
+            width: calc(100% / 3)
+            height: calc(100% / 4)
+
+    &.--dayLayer
+        ._top__tit
+            &.--monthLayer
+                opacity: 0
+                visibility: hidden
+        ._months
+            opacity: 0
+            visibility: hidden
+    &.--monthLayer
+        ._top__tit
+            &.--dayLayer
+                opacity: 0
+                visibility: hidden
+        ._days
+            opacity: 0
+            visibility: hidden
