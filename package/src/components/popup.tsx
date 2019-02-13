@@ -8,7 +8,7 @@ interface Props extends GridProps {
     onToggle: (state?: boolean) => void
 }
 
-class PopupDatepicker extends React.Component<Props, {}> {
+class Popup extends React.Component<Props, {}> {
 
     refPopup: React.RefObject<HTMLDivElement> = React.createRef()
 
@@ -46,4 +46,4 @@ class PopupDatepicker extends React.Component<Props, {}> {
     }
 }
 
-export default PopupDatepicker
+export default Popup

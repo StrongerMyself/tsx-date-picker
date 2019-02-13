@@ -1,6 +1,6 @@
 import Datepicker from './src/components/datepicker'
-import Popup from './src/components/Popup'
-import Input from './src/components/Input'
+import Popup from './src/components/popup'
+import Input from './src/components/input'
 
 export default Datepicker
 

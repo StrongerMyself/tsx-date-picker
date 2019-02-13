@@ -9,6 +9,8 @@ export interface GridProps {
     disablePast?: boolean
     onChange: (date: moment.Moment, format: string) => void
     format?: string
+    leftBtn?: React.ReactNode | string
+    rightBtn?: React.ReactNode | string
 }
 
 interface State {
@@ -32,6 +34,8 @@ class Grid extends React.Component<GridProps, State> {
     static defaultProps = {
         date: moment(),
         format: 'DD-MM-YYYY',
+        leftBtn: '<',
+        rightBtn: '>',
     }
         
     state = {
@@ -122,7 +126,7 @@ class Grid extends React.Component<GridProps, State> {
 
     render() {
         let { viewDate } = this.state
-        let { disablePast, date } = this.props
+        let { disablePast, date, leftBtn, rightBtn } = this.props
         let month = viewDate.month()
         let monthStr = moment.months(month)
         let year = viewDate.year()
@@ -130,14 +134,14 @@ class Grid extends React.Component<GridProps, State> {
             <div className={this.className}>
                 <div className="_top">
                     <div className="_top__arr" onClick={this.onClickArr(-1)}>
-                       {'<'}
+                       {leftBtn}
                     </div>
                     <div onClick={() => this.toggleView()}>
                         <div className="_top__tit --dayLayer">{monthStr} {year}</div>
                         <div className="_top__tit --monthLayer">{year}</div>
                     </div>
                     <div className="_top__arr" onClick={this.onClickArr(1)}>
-                        {'>'}
+                        {rightBtn}
                     </div>
                 </div>
                 <div className="_body">

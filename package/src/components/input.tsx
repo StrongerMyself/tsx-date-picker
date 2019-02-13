@@ -6,6 +6,7 @@ import { GridProps } from './grid/grid'
 
 interface Props extends GridProps {
     autoHide?: boolean
+    showBtn?: React.ReactNode | string
 }
 
 interface State {
@@ -19,6 +20,7 @@ class InputDatepicker extends React.Component<Props, State> {
     static defaultProps = {
         date: moment(),
         format: 'DD-MM-YYYY',
+        showBtn: '#'
     }
 
     refElem: React.RefObject<HTMLDivElement> = React.createRef()
@@ -70,7 +72,7 @@ class InputDatepicker extends React.Component<Props, State> {
     }
 
     render() {
-        let { date, format, disablePast } = this.props
+        let { date, format, disablePast, showBtn } = this.props
         let { popupHide, dateStr, error } = this.state
         return (
             <div className="dp-input" ref={this.refElem}>
@@ -83,7 +85,7 @@ class InputDatepicker extends React.Component<Props, State> {
                             onFocus={() => this.onToggle(false)}
                         />
                         <div className="_btn" onClick={() => this.onToggle()}>
-                            {'#'}
+                            {showBtn}
                         </div>
                     </div>
                 </div>
