@@ -4,7 +4,7 @@ const commonConfig = require('./common')
 const { resolve } = require('path')
 const Dotenv = require('dotenv-webpack')
 
-const port = process.env.PORT || 8000
+const port = process.env.PORT || 1000
 
 module.exports = merge(commonConfig, {
     mode: 'development',
