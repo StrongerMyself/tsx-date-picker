@@ -67,7 +67,7 @@ class InputDatepicker extends React.Component<Props, State> {
         let dateStr = this.dateStr(date)
         this.setState({dateStr, error: false})
         if (autoHide) {
-            this.onToggle(false)
+            this.onToggle(true)
         }
     }
 

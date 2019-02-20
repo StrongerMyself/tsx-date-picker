@@ -14,6 +14,7 @@ class AppComponent extends React.Component<IProps, IState> {
 		date: moment(),
 		dateNotPast: moment(),
 		dateInput: moment(),
+		dateInputAutoHide: moment(),
 	}
 
 	onChange = (key = 'date') => (date, format) => {
@@ -21,7 +22,7 @@ class AppComponent extends React.Component<IProps, IState> {
 	}
 
 	render() {
-		let { date, dateNotPast, dateInput } = this.state
+		let { date, dateNotPast, dateInput, dateInputAutoHide } = this.state
 		return (
 			<div className="page">
 				<div className="page__body">
@@ -42,6 +43,13 @@ class AppComponent extends React.Component<IProps, IState> {
 						<DatePickerInput
 							date={dateInput}
 							onChange={this.onChange('dateInput')}
+						/>
+					</div>
+					<div className="page__row">
+						<DatePickerInput
+							date={dateInputAutoHide}
+							onChange={this.onChange('dateInputAutoHide')}
+							autoHide={true}
 						/>
 					</div>
 				</div>
