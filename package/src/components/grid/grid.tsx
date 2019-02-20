@@ -1,35 +1,23 @@
 import * as React from 'react'
 import moment from 'moment'
+
+import SharedGrid, { SharedGridProps, SharedGridState, GridLayers, CheckDate } from './_shared/shared.grid'
+
 import MonthGrid from './month.grid'
 import WeekGrid from './week.grid'
 import DayGrid from './day.grid'
 
-export interface GridProps {
+export interface GridProps extends SharedGridProps {
     date: moment.Moment
-    disablePast?: boolean
     onChange: (date: moment.Moment, format: string) => void
-    format?: string
-    leftBtn?: React.ReactNode | string
-    rightBtn?: React.ReactNode | string
 }
 
-interface State {
-    layer: Layers
+interface State extends SharedGridState {
+    layer: GridLayers
     viewDate: moment.Moment
 }
 
-enum Layers {
-    day = 'day',
-    month = 'month',
-}
-
-export interface CheckDate {
-    year: boolean
-    month: boolean
-    day: boolean
-}
-
-class Grid extends React.Component<GridProps, State> {
+class Grid extends SharedGrid<GridProps, State> {
 
     static defaultProps = {
         date: moment(),
@@ -39,56 +27,12 @@ class Grid extends React.Component<GridProps, State> {
     }
         
     state = {
-        layer: Layers.day,
-        viewDate: moment(this.props.date),
+        layer: GridLayers.day,
+        viewDate: this.date,
     }
 
-    componentDidUpdate(prevProps) {
-        let prevDateStr = prevProps.date.format('YYYY-MM-DD')
-        let nextDateStr = this.props.date.format('YYYY-MM-DD')
-        if (prevDateStr !== nextDateStr) {
-            this.setState({viewDate: moment(this.props.date)})
-        }
-    }
-
-    toggleView() {
-        let { layer } = this.state
-        if (layer === Layers.day) {
-            layer = Layers.month
-        } else {
-            layer = Layers.day
-        }
-        this.setState({layer})
-    }
-    
-    checkPast = (date: moment.Moment): boolean => {
-        let now = moment().format('YYYY-MM-DD')
-        let check = date.format('YYYY-MM-DD')
-        return moment(check).isBefore(now)
-    }
-
-    checkNow = (date: moment.Moment): CheckDate => {
-        let nowDate = moment()
-        let yearState = date.year() === nowDate.year()
-        let monthState = date.month() === nowDate.month()
-        let dayState = date.date() === nowDate.date()
-        return {
-            year: (yearState),
-            month: (yearState && monthState),
-            day: (yearState && monthState && dayState),
-        }
-    }
-
-    checkSelect = (inDate: moment.Moment): CheckDate => {
-        let { date } = this.props
-        let yearState = inDate.year() === date.year()
-        let monthState = inDate.month() === date.month()
-        let dayState = inDate.date() === date.date()
-        return {
-            year: (yearState),
-            month: (yearState && monthState),
-            day: (yearState && monthState && dayState),
-        }
+    get date() {
+        return moment(this.props.date)
     }
 
     setDate = (date) => {
@@ -102,31 +46,21 @@ class Grid extends React.Component<GridProps, State> {
         }
     }
 
-    setMonthView = (inDate) => {
-        let { viewDate } = this.state
-        let offsetM = inDate.month() - viewDate.month()
-        viewDate.add(offsetM, 'M')
-        this.setState({ viewDate, layer: Layers.day })
-    }
-    
-    onClickArr = (i) => () => {
-        let { layer, viewDate } = this.state
-        if (layer === Layers.day) viewDate.add(i, 'M')
-        if (layer === Layers.month) viewDate.add(i, 'y')
-        this.setState({ viewDate })
-    }
-
-    get className() {
-        let className = 'dp-block'
-        let { layer } = this.state
-        if (layer === Layers.day) className += ' --dayLayer'
-        if (layer === Layers.month) className += ' --monthLayer'
-        return className
+    checkSelect = (inDate: moment.Moment): CheckDate => {
+        let date = this.date
+        let yearState = inDate.year() === date.year()
+        let monthState = inDate.month() === date.month()
+        let dayState = inDate.date() === date.date()
+        return {
+            year: (yearState),
+            month: (yearState && monthState),
+            day: (yearState && monthState && dayState),
+        }
     }
 
     render() {
         let { viewDate } = this.state
-        let { disablePast, date, leftBtn, rightBtn } = this.props
+        let { disablePast, leftBtn, rightBtn } = this.props
         let month = viewDate.month()
         let monthStr = moment.months(month)
         let year = viewDate.year()
@@ -150,7 +84,6 @@ class Grid extends React.Component<GridProps, State> {
                             <WeekGrid/>
                         </div>
                         <DayGrid
-                            date={date}
                             viewDate={viewDate}
                             setDate={this.setDate}
                             disablePast={disablePast}
@@ -162,7 +95,7 @@ class Grid extends React.Component<GridProps, State> {
                     <div className="_months">
                         <MonthGrid
                             viewDate={viewDate}
-                            setView={this.setMonthView}
+                            setView={this.setView('M')}
                             disablePast={disablePast}
                             checkNow={this.checkNow}
                             checkPast={this.checkPast}

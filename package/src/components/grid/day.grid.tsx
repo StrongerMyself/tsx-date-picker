@@ -1,9 +1,8 @@
 import * as React from 'react'
 import moment from 'moment'
-import { CheckDate } from './grid'
+import { CheckDate } from './_shared/shared.grid'
 
 interface Props {
-    date: moment.Moment
     viewDate: moment.Moment
     disablePast: boolean
     setDate: (date: moment.Moment) => void
