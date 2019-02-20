@@ -76,17 +76,15 @@ class InputDatepicker extends React.Component<Props, State> {
         let { popupHide, dateStr, error } = this.state
         return (
             <div className="dp-input" ref={this.refElem}>
-                <div className="fieldInput">
-                    <div className={`_input ${error ? ' --error' : ''}`}>
-                        <input 
-                            type="text"
-                            value={dateStr}
-                            onChange={this.onInputChange}
-                            onFocus={() => this.onToggle(false)}
-                        />
-                        <div className="_btn" onClick={() => this.onToggle()}>
-                            {showBtn}
-                        </div>
+                <div className={`dp-input__input ${error ? ' --error' : ''}`}>
+                    <input 
+                        type="text"
+                        value={dateStr}
+                        onChange={this.onInputChange}
+                        onFocus={() => this.onToggle(false)}
+                    />
+                    <div className="dp-input__btn" onClick={() => this.onToggle()}>
+                        {showBtn}
                     </div>
                 </div>
                 <Popup

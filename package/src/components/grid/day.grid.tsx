@@ -25,7 +25,7 @@ class DayGrid extends React.Component<Props, {}> {
             .startOf('week')
         for (let i = 0; i <= weekLen; i++) {
             outElem.push(
-                <div key={i} className="_row">
+                <div key={i} className="dp-block__row">
                     {this.renderWeek()}
                 </div>
             )
@@ -38,7 +38,7 @@ class DayGrid extends React.Component<Props, {}> {
         let { setDate } = this.props
         for (let i = 0; i < 7; i++) {
             let date = moment(this.renderDate)
-            let className = '_cell'
+            let className = 'dp-blockCell'
             let checkDate = this.checkDate(className, date)
             className = checkDate.className
             let onClick = checkDate.isClick ? null : () => setDate(date)

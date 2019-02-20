@@ -66,21 +66,21 @@ class Grid extends SharedGrid<GridProps, State> {
         let year = viewDate.year()
         return (
             <div className={this.className}>
-                <div className="_top">
-                    <div className="_top__arr" onClick={this.onClickArr(-1)}>
+                <div className="dp-blockTop">
+                    <div className="dp-blockTop__arr" onClick={this.onClickArr(-1)}>
                        {leftBtn}
                     </div>
                     <div onClick={() => this.toggleView()}>
-                        <div className="_top__tit --dayLayer">{monthStr} {year}</div>
-                        <div className="_top__tit --monthLayer">{year}</div>
+                        <div className="dp-blockTop__tit --dayLayer">{monthStr} {year}</div>
+                        <div className="dp-blockTop__tit --monthLayer">{year}</div>
                     </div>
-                    <div className="_top__arr" onClick={this.onClickArr(1)}>
+                    <div className="dp-blockTop__arr" onClick={this.onClickArr(1)}>
                         {rightBtn}
                     </div>
                 </div>
-                <div className="_body">
-                    <div className="_days">
-                        <div className="_row">
+                <div className="dp-block__body">
+                    <div className="dp-block__days">
+                        <div className="dp-block__row">
                             <WeekGrid/>
                         </div>
                         <DayGrid
@@ -92,7 +92,7 @@ class Grid extends SharedGrid<GridProps, State> {
                             checkSelect={this.checkSelect}
                         />
                     </div>
-                    <div className="_months">
+                    <div className="dp-block__months">
                         <MonthGrid
                             viewDate={viewDate}
                             setView={this.setView('M')}

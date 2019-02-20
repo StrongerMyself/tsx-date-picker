@@ -1,6 +1,6 @@
 import * as React from 'react'
 import moment from 'moment'
-import { CheckDate } from './grid'
+import { CheckDate } from './_shared/shared.grid'
 
 interface Props {
     disablePast: boolean
@@ -18,7 +18,7 @@ class MonthGrid extends React.Component<Props, {}> {
         let { viewDate, setView } = this.props
         let date = moment(viewDate).startOf('year').endOf('month')
         for (let i = 0; i < 12; i++) {            
-            let className = '_cell --month'
+            let className = 'dp-blockCell --month'
             let checkDate = this.checkDate(className, date)
             className = checkDate.className
             let d = moment(date)
