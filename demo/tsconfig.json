@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"baseUrl": "./",
 		"outDir": "./dist/",
-		"sourceMap": false,
+		"sourceMap": true,
 		"esModuleInterop": true,
 		// "noImplicitAny": true,
 		"module": "commonjs",

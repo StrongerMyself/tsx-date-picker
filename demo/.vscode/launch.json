@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "run dev",
+            "type": "chrome",
+            "request": "launch",
+            "preLaunchTask": "npm: start",
+            "url": "http://localhost:1000",
+            "webRoot": "${workspaceFolder}",
+            "internalConsoleOptions": "openOnSessionStart",
+            "trace": true,
+            "sourceMaps": true,
+            "sourceMapPathOverrides": {
+                "webpack:/*": "${webRoot}/*"
+            }
+        },
+    ]
+}

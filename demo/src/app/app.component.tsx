@@ -12,6 +12,7 @@ class AppComponent extends React.Component<IProps, IState> {
 
 	state = {
 		date: moment(),
+		dateNotPast: moment(),
 		dateInput: moment(),
 	}
 
@@ -20,7 +21,7 @@ class AppComponent extends React.Component<IProps, IState> {
 	}
 
 	render() {
-		let { date, dateInput } = this.state
+		let { date, dateNotPast, dateInput } = this.state
 		return (
 			<div className="page">
 				<div className="page__body">
@@ -28,6 +29,13 @@ class AppComponent extends React.Component<IProps, IState> {
 						<Datepicker
 							date={date}
 							onChange={this.onChange('date')}
+							/>
+					</div>
+					<div className="page__row">
+						<Datepicker
+							date={dateNotPast}
+							onChange={this.onChange('dateNotPast')}
+							disablePast={true}
 						/>
 					</div>
 					<div className="page__row">
