@@ -18,13 +18,6 @@ interface State extends SharedGridState {
 }
 
 class Grid extends SharedGrid<GridProps, State> {
-
-    static defaultProps = {
-        date: moment(),
-        format: 'DD-MM-YYYY',
-        leftBtn: '<',
-        rightBtn: '>',
-    }
         
     state = {
         layer: GridLayers.day,
@@ -60,7 +53,7 @@ class Grid extends SharedGrid<GridProps, State> {
 
     render() {
         let { viewDate } = this.state
-        let { disablePast, leftBtn, rightBtn } = this.props
+        let { disableFuture, disablePast, leftBtn, rightBtn } = this.props
         let month = viewDate.month()
         let monthStr = moment.months(month)
         let year = viewDate.year()
@@ -87,8 +80,10 @@ class Grid extends SharedGrid<GridProps, State> {
                             viewDate={viewDate}
                             setDate={this.setDate}
                             disablePast={disablePast}
+                            disableFuture={disableFuture}
                             checkNow={this.checkNow}
                             checkPast={this.checkPast}
+                            checkFuture={this.checkFuture}
                             checkSelect={this.checkSelect}
                         />
                     </div>

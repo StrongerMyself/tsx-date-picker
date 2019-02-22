@@ -13,6 +13,7 @@ class AppComponent extends React.Component<IProps, IState> {
 	state = {
 		date: moment(),
 		dateNotPast: moment(),
+		dateNotFuture: moment(),
 		dateInput: moment(),
 		dateInputAutoHide: moment(),
 	}
@@ -22,17 +23,19 @@ class AppComponent extends React.Component<IProps, IState> {
 	}
 
 	render() {
-		let { date, dateNotPast, dateInput, dateInputAutoHide } = this.state
+		let { date, dateNotPast, dateNotFuture, dateInput, dateInputAutoHide } = this.state
 		return (
 			<div className="page">
 				<div className="page__body">
 					<div className="page__row">
+						<div className="page__tit">date</div>
 						<Datepicker
 							date={date}
 							onChange={this.onChange('date')}
 							/>
 					</div>
 					<div className="page__row">
+						<div className="page__tit">dateNotPast</div>
 						<Datepicker
 							date={dateNotPast}
 							onChange={this.onChange('dateNotPast')}
@@ -40,12 +43,22 @@ class AppComponent extends React.Component<IProps, IState> {
 						/>
 					</div>
 					<div className="page__row">
+						<div className="page__tit">dateNotFuture</div>
+						<Datepicker
+							date={dateNotFuture}
+							onChange={this.onChange('dateNotFuture')}
+							disableFuture={true}
+						/>
+					</div>
+					<div className="page__row">
+						<div className="page__tit">dateInput</div>
 						<DatePickerInput
 							date={dateInput}
 							onChange={this.onChange('dateInput')}
 						/>
 					</div>
 					<div className="page__row">
+						<div className="page__tit">dateInputAutoHide</div>
 						<DatePickerInput
 							date={dateInputAutoHide}
 							onChange={this.onChange('dateInputAutoHide')}

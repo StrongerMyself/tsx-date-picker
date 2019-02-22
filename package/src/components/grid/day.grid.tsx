@@ -5,9 +5,11 @@ import { CheckDate } from './_shared/shared.grid'
 interface Props {
     viewDate: moment.Moment
     disablePast: boolean
+    disableFuture: boolean
     setDate: (date: moment.Moment) => void
     checkNow: (date: moment.Moment) => CheckDate
     checkPast: (date: moment.Moment) => boolean
+    checkFuture: (date: moment.Moment) => boolean
     checkSelect: (date: moment.Moment) => CheckDate
 
 }
@@ -41,7 +43,7 @@ class DayGrid extends React.Component<Props, {}> {
             let className = 'dp-blockCell'
             let checkDate = this.checkDate(className, date)
             className = checkDate.className
-            let onClick = checkDate.isClick ? null : () => setDate(date)
+            let onClick = checkDate.notClick ? null : () => setDate(date)
             outElem.push(
                 <div 
                     key={i} 
@@ -56,21 +58,21 @@ class DayGrid extends React.Component<Props, {}> {
     }
 
     checkDate = (className, date) => {
-        let { disablePast, viewDate, checkNow, checkPast, checkSelect } = this.props
+        let { disableFuture, disablePast, viewDate, checkNow, checkPast, checkFuture, checkSelect } = this.props
 
-        let otherDay = date.month() !== viewDate.month()
         let nowState = checkNow(date).day
-        let pastState = disablePast ? checkPast(date) : false
         let selectState = checkSelect(date).day
+        let otherDay = date.month() !== viewDate.month()
+        let pastState = disablePast ? checkPast(date) : false
+        let futureState = disableFuture ? checkFuture(date) : false
         
-        if (otherDay) className += ' --otherDay'
+        let notClick = (otherDay || pastState || futureState)
+        
         if (nowState) className += ' --now'
-        if (pastState) className += ' --past'
         if (selectState) className += ' --select'
+        if (notClick) className += ' --hide'
 
-        let isClick = (otherDay || pastState)
-
-        return { className, isClick }
+        return { className, notClick }
     }
 
     render() {

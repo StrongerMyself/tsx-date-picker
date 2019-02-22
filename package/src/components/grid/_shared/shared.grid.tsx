@@ -3,6 +3,7 @@ import moment from 'moment'
 
 export interface SharedGridProps {
     disablePast?: boolean
+    disableFuture?: boolean
     format?: string
     leftBtn?: React.ReactNode | string
     rightBtn?: React.ReactNode | string
@@ -33,6 +34,8 @@ class SharedGrid<
         format: 'DD-MM-YYYY',
         leftBtn: '<',
         rightBtn: '>',
+        disablePast: false,
+        disableFuture: false,
     }
 
     componentDidUpdate(prevProps) {
@@ -61,6 +64,12 @@ class SharedGrid<
         let now = moment().format('YYYY-MM-DD')
         let check = date.format('YYYY-MM-DD')
         return moment(check).isBefore(now)
+    }
+    
+    checkFuture = (date: moment.Moment): boolean => {
+        let now = moment().format('YYYY-MM-DD')
+        let check = date.format('YYYY-MM-DD')
+        return moment(check).isAfter(now)
     }
 
     checkNow = (date: moment.Moment): CheckDate => {
