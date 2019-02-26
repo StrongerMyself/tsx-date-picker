@@ -1,6 +1,6 @@
 import * as React from 'react'
 import moment from 'moment'
-import Datepicker, { DatePickerInput } from '../../../package/single'
+import { Datepicker, DatePickerInput } from '../../../package/single'
 
 interface IProps {}
 
