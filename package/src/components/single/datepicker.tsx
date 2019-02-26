@@ -1,11 +1,11 @@
 import * as React from 'react'
-import Grid, { GridProps } from './grid/grid'
+import Grid, { GridProps } from './grid'
 
 interface Props extends GridProps {}
 
 interface State {}
 
-class Datepicker extends React.Component<Props, State> {
+class DatepickerSingle extends React.Component<Props, State> {
 
     render() {
         let { ...rest } = this.props
@@ -17,4 +17,4 @@ class Datepicker extends React.Component<Props, State> {
     }
 }
 
-export default Datepicker
+export default DatepickerSingle

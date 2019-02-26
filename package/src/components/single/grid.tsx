@@ -1,11 +1,11 @@
 import * as React from 'react'
 import moment from 'moment'
 
-import SharedGrid, { SharedGridProps, SharedGridState, GridLayers, CheckDate } from './_shared/shared.grid'
+import SharedGrid, { SharedGridProps, SharedGridState, GridLayers, CheckDate } from '../grid/_shared/shared.grid'
 
-import MonthGrid from './month.grid'
-import WeekGrid from './week.grid'
-import DayGrid from './day.grid'
+import MonthGrid from '../grid/month.grid'
+import WeekGrid from '../grid/week.grid'
+import DayGrid from '../grid/day.grid'
 
 export interface GridProps extends SharedGridProps {
     date: moment.Moment

@@ -10,14 +10,21 @@
 		width: 100%
 		padding: 20px
 	&__row
+		display: flex
+		flex-wrap: wrap
+		align-items: center
+		justify-content: center
+		width: 33.3%
+		padding-bottom: 20px
 		margin-bottom: 40px
-		width: 50%
-		&:last-child
-			margin-bottom: 0
+		margin-bottom: 0
+		&:nth-child(3n+2)
+			border-left: 1px solid #000
+			border-right: 1px solid #000
 	&__tit
 		width: 100%
-		margin: 20px 0
-		padding: 5px 0
+		padding: 20px 20px 5px
+		margin-bottom: 20px
 		font-size: 12px
 		font-weight: bold
 		text-transform: uppercase

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import moment from 'moment'
-import Datepicker, { DatePickerInput } from '../../../package'
+import Datepicker, { DatePickerInput } from '../../../package/single'
 
 interface IProps {}
 
@@ -11,11 +11,12 @@ interface IState {
 class AppComponent extends React.Component<IProps, IState> {
 
 	state = {
+		dateInput: moment(),
+		dateInputAutoHide: moment(),
+		dateRange: moment(),
 		date: moment(),
 		dateNotPast: moment(),
 		dateNotFuture: moment(),
-		dateInput: moment(),
-		dateInputAutoHide: moment(),
 	}
 
 	onChange = (key = 'date') => (date, format) => {
@@ -23,10 +24,32 @@ class AppComponent extends React.Component<IProps, IState> {
 	}
 
 	render() {
-		let { date, dateNotPast, dateNotFuture, dateInput, dateInputAutoHide } = this.state
+		let { dateInput, dateInputAutoHide, dateRange, date, dateNotPast, dateNotFuture } = this.state
 		return (
 			<div className="page">
 				<div className="page__body">
+					<div className="page__row">
+						<div className="page__tit">dateInput</div>
+						<DatePickerInput
+							date={dateInput}
+							onChange={this.onChange('dateInput')}
+						/>
+					</div>
+					<div className="page__row">
+						<div className="page__tit">dateInputAutoHide</div>
+						<DatePickerInput
+							date={dateInputAutoHide}
+							onChange={this.onChange('dateInputAutoHide')}
+							autoHide={true}
+						/>
+					</div>
+					<div className="page__row">
+						<div className="page__tit">dateRange</div>
+						<DatePickerInput
+							date={dateRange}
+							onChange={this.onChange('dateRange')}
+						/>
+					</div>
 					<div className="page__row">
 						<div className="page__tit">date</div>
 						<Datepicker
@@ -48,21 +71,6 @@ class AppComponent extends React.Component<IProps, IState> {
 							date={dateNotFuture}
 							onChange={this.onChange('dateNotFuture')}
 							disableFuture={true}
-						/>
-					</div>
-					<div className="page__row">
-						<div className="page__tit">dateInput</div>
-						<DatePickerInput
-							date={dateInput}
-							onChange={this.onChange('dateInput')}
-						/>
-					</div>
-					<div className="page__row">
-						<div className="page__tit">dateInputAutoHide</div>
-						<DatePickerInput
-							date={dateInputAutoHide}
-							onChange={this.onChange('dateInputAutoHide')}
-							autoHide={true}
 						/>
 					</div>
 				</div>
