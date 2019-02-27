@@ -19,10 +19,16 @@ export enum Layers {
     month = 'month',
 }
 
-export interface CheckDate {
-    year: boolean
-    month: boolean
-    day: boolean
+export type CheckDateFunc = (
+    className: string, 
+    date: moment.Moment, 
+    key: any, 
+    otherDay?: boolean
+) => CheckDate
+
+export type CheckDate = {
+    className: string 
+    notClick: boolean
 }
 
 export class Grid<P extends Props, S extends State> extends React.Component<P, S> {
@@ -33,18 +39,6 @@ export class Grid<P extends Props, S extends State> extends React.Component<P, S
         rightBtn: '>',
         disablePast: false,
         disableFuture: false,
-    }
-
-    componentDidUpdate(prevProps) {
-        let prevDateStr = prevProps.date.format('YYYY-MM-DD')
-        let nextDateStr = this.date.format('YYYY-MM-DD')
-        if (prevDateStr !== nextDateStr) {
-            this.setState({viewDate: moment(this.date)})
-        }
-    }
-
-    get date() {
-        return moment()
     }
 
     toggleView() {
@@ -69,16 +63,39 @@ export class Grid<P extends Props, S extends State> extends React.Component<P, S
         return moment(check).isAfter(now)
     }
 
-    checkNow = (date: moment.Moment): CheckDate => {
+    checkNow = (date: moment.Moment) => {
         let nowDate = moment()
         let yearState = date.year() === nowDate.year()
         let monthState = date.month() === nowDate.month()
         let dayState = date.date() === nowDate.date()
         return {
-            year: (yearState),
-            month: (yearState && monthState),
-            day: (yearState && monthState && dayState),
+            months: (yearState && monthState),
+            days: (yearState && monthState && dayState),
         }
+    }
+
+    checkSelect = (inDate: moment.Moment) => {
+        return {
+            months: false,
+            days: false,
+        }
+    }
+
+    checkDate = (className: string, date: moment.Moment, key, otherDay: boolean = false): CheckDate => {
+        let { disablePast, disableFuture } = this.props
+
+        let nowState = this.checkNow(date)[key]
+        let selectState = this.checkSelect(date)[key]
+        let pastState = disablePast ? this.checkPast(date) : false
+        let futureState = disableFuture ? this.checkFuture(date) : false
+        
+        let notClick = (otherDay || pastState || futureState)
+
+        if (nowState) className += ' --now'
+        if (selectState) className += ' --select'
+        if (notClick) className += ' --hide'
+
+        return { className, notClick }
     }
     
     setView = (typeAdd) => (date) => {

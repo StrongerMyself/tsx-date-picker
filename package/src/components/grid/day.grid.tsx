@@ -1,17 +1,13 @@
 import * as React from 'react'
 import moment from 'moment'
-import { CheckDate } from './grid'
+import { CheckDateFunc } from './grid'
 
 interface Props {
     viewDate: moment.Moment
     disablePast: boolean
     disableFuture: boolean
     setDate: (date: moment.Moment) => void
-    checkNow: (date: moment.Moment) => CheckDate
-    checkPast: (date: moment.Moment) => boolean
-    checkFuture: (date: moment.Moment) => boolean
-    checkSelect: (date: moment.Moment) => CheckDate
-
+    onCheckDate: CheckDateFunc
 }
 
 class DayGrid extends React.Component<Props, {}> {
@@ -37,11 +33,12 @@ class DayGrid extends React.Component<Props, {}> {
 
     renderWeek() {
         let outElem = []
-        let { setDate } = this.props
+        let { setDate, onCheckDate, viewDate } = this.props
         for (let i = 0; i < 7; i++) {
             let date = moment(this.renderDate)
             let className = 'dp-blockCell'
-            let checkDate = this.checkDate(className, date)
+            let otherDay = date.month() !== viewDate.month()
+            let checkDate = onCheckDate(className, date, 'days', otherDay)
             className = checkDate.className
             let onClick = checkDate.notClick ? null : () => setDate(date)
             outElem.push(
@@ -56,25 +53,7 @@ class DayGrid extends React.Component<Props, {}> {
         }
         return outElem
     }
-
-    checkDate = (className, date) => {
-        let { disableFuture, disablePast, viewDate, checkNow, checkPast, checkFuture, checkSelect } = this.props
-
-        let nowState = checkNow(date).day
-        let selectState = checkSelect(date).day
-        let otherDay = date.month() !== viewDate.month()
-        let pastState = disablePast ? checkPast(date) : false
-        let futureState = disableFuture ? checkFuture(date) : false
-        
-        let notClick = (otherDay || pastState || futureState)
-        
-        if (nowState) className += ' --now'
-        if (selectState) className += ' --select'
-        if (notClick) className += ' --hide'
-
-        return { className, notClick }
-    }
-
+    
     render() {
         return (
             <>

@@ -4,6 +4,11 @@ import moment from 'moment'
 import Popup from './popup'
 import { Props as GridProps } from './grid'
 
+type DateInputRange = {
+    from: string
+    to: string
+}
+
 interface Props extends GridProps {
     autoHide?: boolean
     showBtn?: React.ReactNode | string
@@ -11,23 +16,29 @@ interface Props extends GridProps {
 
 interface State {
     popupHide: boolean
-    dateStr: string
+    dateStr: DateInputRange
     error: boolean
 }
 
 class InputDatepicker extends React.Component<Props, State> {
 
     static defaultProps = {
-        date: moment(),
+        date: {
+            from: moment(),
+            to: moment()
+        },
         format: 'DD-MM-YYYY',
         showBtn: '#'
     }
 
     refElem: React.RefObject<HTMLDivElement> = React.createRef()
 
-    dateStr(date = this.props.date) {
+    dateStr(date = this.props.date): DateInputRange {
         let { format } = this.props
-        return date.format(format)
+        return {
+            from: date.from.format(format),
+            to: date.to.format(format)
+        }
     }
 
     state = {
@@ -40,30 +51,32 @@ class InputDatepicker extends React.Component<Props, State> {
         this.setState({popupHide: state})
     }
 
-    onChange = (date) => {
-        let { onChange, format } = this.props
-        onChange(moment(date), format)
+    onChange = (key) => (dateIn) => {
+        let { date, onChange, format } = this.props
+        date[key] = moment(dateIn)
+        onChange(date, format)
     }
 
-    onInputChange = (e) => {
+    onInputChange = (key) => (e) => {
         let { value } = e.target
-        let { error } = this.state
+        let { error, dateStr } = this.state
         let { format, disablePast, disableFuture } = this.props
         let date = moment(value, format)
-        
+
         let validDate = (date.format() === 'Invalid date')
         let validLen = value.length !== format.length
         let pastState = disablePast ? this.checkPast(date) : false
         let futureState = disableFuture ? this.checkFuture(date) : false
         let inNotValid = (validDate || validLen || pastState || futureState)
-        
+
         if (inNotValid) {
             error = true
         } else {
-            this.onChange(date)
+            this.onChange(key)(date)
             error = false
         }
-        this.setState({dateStr: value, error})
+        dateStr[key] = value
+        this.setState({dateStr, error})
     }
 
     onPopupChange = (date) => {
@@ -71,7 +84,8 @@ class InputDatepicker extends React.Component<Props, State> {
         this.onChange(date)
         let dateStr = this.dateStr(date)
         this.setState({dateStr, error: false})
-        if (autoHide) {
+        let len = date.to.diff(date.from, 'days')
+        if (autoHide && len > 0) {
             this.onToggle(true)
         }
     }
@@ -96,8 +110,14 @@ class InputDatepicker extends React.Component<Props, State> {
                 <div className={`dp-input__input ${error ? ' --error' : ''}`}>
                     <input 
                         type="text"
-                        value={dateStr}
-                        onChange={this.onInputChange}
+                        value={dateStr.from}
+                        onChange={this.onInputChange('from')}
+                        onFocus={() => this.onToggle(false)}
+                    />
+                    <input 
+                        type="text"
+                        value={dateStr.to}
+                        onChange={this.onInputChange('to')}
                         onFocus={() => this.onToggle(false)}
                     />
                     <div className="dp-input__btn" onClick={() => this.onToggle()}>

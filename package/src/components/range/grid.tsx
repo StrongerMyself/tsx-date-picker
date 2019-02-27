@@ -3,9 +3,14 @@ import moment from 'moment'
 
 import { Shared, MonthGrid, WeekGrid, DayGrid } from '../grid'
 
+export type DateRange = {
+    from: moment.Moment
+    to: moment.Moment
+}
+
 export interface Props extends Shared.Props {
-    date: moment.Moment
-    onChange: (date: moment.Moment, format: string) => void
+    date: DateRange
+    onChange: (date: DateRange, format: string) => void
 }
 
 interface State extends Shared.State {
@@ -17,40 +22,57 @@ class Grid extends Shared.Grid<Props, State> {
         
     state = {
         layer: Shared.Layers.day,
-        viewDate: this.date,
+        viewDate: this.date.from,
     }
 
     componentDidUpdate(prevProps) {
-        let prevDateStr = prevProps.date.format('YYYY-MM-DD')
-        let nextDateStr = this.date.format('YYYY-MM-DD')
+        let prevDateStr = prevProps.date.from.format('YYYY-MM-DD')
+        let nextDateStr = this.date.from.format('YYYY-MM-DD')
         if (prevDateStr !== nextDateStr) {
-            this.setState({viewDate: moment(this.date)})
+            this.setState({viewDate: moment(this.date.from)})
         }
     }
 
-    get date() {
-        return moment(this.props.date)
+    get date(): DateRange {
+        let { date } = this.props
+        return {
+            from: moment(date.from),
+            to: moment(date.to),
+        }
     }
 
-    setDate = (date) => {
+    setInterval = (dateIn: moment.Moment): {date: DateRange, viewDate: moment.Moment} => {
+        let { date } = this.props
+        let len = date.to.diff(date.from, 'days')
+        let dir = dateIn.isBefore(date.from, 'date') ? 'from' : 'to'
+        if (len > 0) {
+            date = {
+                from: moment(dateIn),
+                to: moment(dateIn),
+            }
+        } else {
+            date[dir] = moment(dateIn)
+        }
+        let viewDate = (dir === 'from') ? moment(date.from) : moment(date.to)
+        return { date, viewDate }
+    }
+    
+    setDate = (dateIn) => {
         let { onChange, format, disablePast } = this.props
-        let pastState = disablePast ? this.checkPast(date) : false
+        let pastState = disablePast ? this.checkPast(dateIn) : false
         if (!pastState) {
-            let viewDate = moment(date)
+            let { viewDate, date } = this.setInterval(dateIn)
             this.setState({ viewDate }, () => {
-                onChange(moment(date), format)
+                onChange(date, format)
             })
         }
     }
 
     checkSelect = (inDate: moment.Moment) => {
         let { date } = this.props
-        let yearState = inDate.year() === date.year()
-        let monthState = inDate.month() === date.month()
-        let dayState = inDate.date() === date.date()
         return {
-            months: (yearState && monthState),
-            days: (yearState && monthState && dayState),
+            months: inDate.isBetween(date.from, date.to, 'months', '[]'),
+            days: inDate.isBetween(date.from, date.to, 'days', '[]'),
         }
     }
 

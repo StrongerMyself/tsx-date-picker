@@ -7,7 +7,6 @@
     &__input
         position: relative
         display: flex
-        flex-wrap: wrap
         width: 305px
         max-width: 100%
         input
@@ -18,29 +17,32 @@
             padding: 10px 13px
             background: #FFFFFF
             border: 1px solid #E7E7E7
-            border-radius: 6px
+            border-right: none
+            border-top-left-radius: 6px
+            border-bottom-left-radius: 6px
             font-size: 16px
             font-weight: 500
             line-height: 19px
             color: #414658
             transition: 0.3s
+            & + input
+                border-radius: 0
         &.--error
             input
                 border-color: $red
             .dp-input__btn
                 border-color: $red
     &__btn
-        position: absolute
-        z-index: 3
-        top: 0
-        right: 0
         width: 40px
+        min-width: 40px
         height: 40px
         display: flex
         align-items: center
         justify-content: center
-        cursor: pointer
-        border-left: 1px solid #E7E7E7
+        border: 1px solid #E7E7E7
+        border-top-right-radius: 6px
+        border-bottom-right-radius: 6px
         user-select: none
+        cursor: pointer
         path
             stroke: $fontDark
