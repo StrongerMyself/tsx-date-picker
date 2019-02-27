@@ -31,7 +31,7 @@ export type CheckDate = {
     notClick: boolean
 }
 
-export class Grid<P extends Props, S extends State> extends React.Component<P, S> {
+export class Component<P extends Props, S extends State> extends React.Component<P, S> {
 
     static defaultProps = {
         format: 'DD-MM-YYYY',

@@ -1,27 +1,27 @@
 import * as React from 'react'
 import moment from 'moment'
 
-import { Shared, MonthGrid, WeekGrid, DayGrid } from '../grid'
+import { BaseGrid, MonthGrid, WeekGrid, DayGrid } from '../_shared'
 
 export type DateRange = {
     from: moment.Moment
     to: moment.Moment
 }
 
-export interface Props extends Shared.Props {
+export interface Props extends BaseGrid.Props {
     date: DateRange
     onChange: (date: DateRange, format: string) => void
 }
 
-interface State extends Shared.State {
-    layer: Shared.Layers
+interface State extends BaseGrid.State {
+    layer: BaseGrid.Layers
     viewDate: moment.Moment
 }
 
-class Grid extends Shared.Grid<Props, State> {
+class Grid extends BaseGrid.Component<Props, State> {
         
     state = {
-        layer: Shared.Layers.day,
+        layer: BaseGrid.Layers.day,
         viewDate: this.date.from,
     }
 

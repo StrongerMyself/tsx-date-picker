@@ -1,21 +1,16 @@
 import * as React from 'react'
 import moment from 'moment'
 
+import { BaseInput } from '../_shared'
 import Popup from './popup'
 import { Props as GridProps } from './grid'
 
-interface Props extends GridProps {
-    autoHide?: boolean
-    showBtn?: React.ReactNode | string
-}
+interface Props extends BaseInput.Props, GridProps {}
 
-interface State {
-    popupHide: boolean
+interface State extends BaseInput.State {
     dateStr: string
-    error: boolean
 }
-
-class InputDatepicker extends React.Component<Props, State> {
+class InputDatepicker extends BaseInput.Component<Props, State> {
 
     static defaultProps = {
         date: moment(),
@@ -36,10 +31,6 @@ class InputDatepicker extends React.Component<Props, State> {
         error: false
     }
 
-    onToggle = (state = !this.state.popupHide) => {
-        this.setState({popupHide: state})
-    }
-
     onChange = (date) => {
         let { onChange, format } = this.props
         onChange(moment(date), format)
@@ -48,15 +39,9 @@ class InputDatepicker extends React.Component<Props, State> {
     onInputChange = (e) => {
         let { value } = e.target
         let { error } = this.state
-        let { format, disablePast, disableFuture } = this.props
+        let { format } = this.props
         let date = moment(value, format)
-        
-        let validDate = (date.format() === 'Invalid date')
-        let validLen = value.length !== format.length
-        let pastState = disablePast ? this.checkPast(date) : false
-        let futureState = disableFuture ? this.checkFuture(date) : false
-        let inNotValid = (validDate || validLen || pastState || futureState)
-        
+        let inNotValid = this.validInputChange(date, value)
         if (inNotValid) {
             error = true
         } else {
@@ -74,18 +59,6 @@ class InputDatepicker extends React.Component<Props, State> {
         if (autoHide) {
             this.onToggle(true)
         }
-    }
-
-    checkPast = (date: moment.Moment): boolean => {
-        let now = moment().format('YYYY-MM-DD')
-        let check = date.format('YYYY-MM-DD')
-        return moment(check).isBefore(now)
-    }
-    
-    checkFuture = (date: moment.Moment): boolean => {
-        let now = moment().format('YYYY-MM-DD')
-        let check = date.format('YYYY-MM-DD')
-        return moment(check).isAfter(now)
     }
 
     render() {
