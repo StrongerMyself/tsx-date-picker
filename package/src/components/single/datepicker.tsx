@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Grid, { GridProps } from './grid'
+import Grid, { Props as GridProps } from './grid'
 
 interface Props extends GridProps {}
 

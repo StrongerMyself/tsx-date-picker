@@ -1,7 +1,7 @@
 import * as React from 'react'
 import moment from 'moment'
 
-export interface SharedGridProps {
+export interface Props {
     disablePast?: boolean
     disableFuture?: boolean
     format?: string
@@ -9,12 +9,12 @@ export interface SharedGridProps {
     rightBtn?: React.ReactNode | string
 }
 
-export interface SharedGridState {
-    layer: GridLayers
+export interface State {
+    layer: Layers
     viewDate: moment.Moment
 }
 
-export enum GridLayers {
+export enum Layers {
     day = 'day',
     month = 'month',
 }
@@ -25,10 +25,7 @@ export interface CheckDate {
     day: boolean
 }
 
-class SharedGrid<
-	P extends SharedGridProps,
-	S extends SharedGridState
-> extends React.Component<P, S> {
+export class Grid<P extends Props, S extends State> extends React.Component<P, S> {
 
     static defaultProps = {
         format: 'DD-MM-YYYY',
@@ -52,10 +49,10 @@ class SharedGrid<
 
     toggleView() {
         let { layer } = this.state
-        if (layer === GridLayers.day) {
-            layer = GridLayers.month
+        if (layer === Layers.day) {
+            layer = Layers.month
         } else {
-            layer = GridLayers.day
+            layer = Layers.day
         }
         this.setState({layer})
     }
@@ -88,23 +85,21 @@ class SharedGrid<
         let { viewDate } = this.state
         let offsetM = date.month() - viewDate.month()
         viewDate.add(offsetM, typeAdd)
-        this.setState({ viewDate, layer: GridLayers.day })
+        this.setState({ viewDate, layer: Layers.day })
     }
     
     onClickArr = (i) => () => {
         let { layer, viewDate } = this.state
-        if (layer === GridLayers.day) viewDate.add(i, 'M')
-        if (layer === GridLayers.month) viewDate.add(i, 'y')
+        if (layer === Layers.day) viewDate.add(i, 'M')
+        if (layer === Layers.month) viewDate.add(i, 'y')
         this.setState({ viewDate })
     }
 
     get className() {
         let className = 'dp-block'
         let { layer } = this.state
-        if (layer === GridLayers.day) className += ' --dayLayer'
-        if (layer === GridLayers.month) className += ' --monthLayer'
+        if (layer === Layers.day) className += ' --dayLayer'
+        if (layer === Layers.month) className += ' --monthLayer'
         return className
     }
 }
-
-export default SharedGrid

@@ -1,26 +1,22 @@
 import * as React from 'react'
 import moment from 'moment'
 
-import SharedGrid, { SharedGridProps, SharedGridState, GridLayers, CheckDate } from '../grid/_shared/shared.grid'
+import { Shared, MonthGrid, WeekGrid, DayGrid } from '../grid'
 
-import MonthGrid from '../grid/month.grid'
-import WeekGrid from '../grid/week.grid'
-import DayGrid from '../grid/day.grid'
-
-export interface GridProps extends SharedGridProps {
+export interface Props extends Shared.Props {
     date: moment.Moment
     onChange: (date: moment.Moment, format: string) => void
 }
 
-interface State extends SharedGridState {
-    layer: GridLayers
+interface State extends Shared.State {
+    layer: Shared.Layers
     viewDate: moment.Moment
 }
 
-class Grid extends SharedGrid<GridProps, State> {
+class Grid extends Shared.Grid<Props, State> {
         
     state = {
-        layer: GridLayers.day,
+        layer: Shared.Layers.day,
         viewDate: this.date,
     }
 
@@ -39,7 +35,7 @@ class Grid extends SharedGrid<GridProps, State> {
         }
     }
 
-    checkSelect = (inDate: moment.Moment): CheckDate => {
+    checkSelect = (inDate: moment.Moment): Shared.CheckDate => {
         let date = this.date
         let yearState = inDate.year() === date.year()
         let monthState = inDate.month() === date.month()

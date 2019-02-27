@@ -2,7 +2,7 @@ import * as React from 'react'
 import moment from 'moment'
 
 import Popup from './popup'
-import { GridProps } from './grid'
+import { Props as GridProps } from './grid'
 
 interface Props extends GridProps {
     autoHide?: boolean

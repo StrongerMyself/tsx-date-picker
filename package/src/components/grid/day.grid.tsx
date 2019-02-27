@@ -1,6 +1,6 @@
 import * as React from 'react'
 import moment from 'moment'
-import { CheckDate } from './_shared/shared.grid'
+import { CheckDate } from './grid'
 
 interface Props {
     viewDate: moment.Moment
