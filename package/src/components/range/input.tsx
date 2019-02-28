@@ -10,7 +10,9 @@ type DateInputRange = {
     to: string
 }
 
-interface Props extends BaseInput.Props, GridProps {}
+interface Props extends BaseInput.Props, GridProps {
+    separate?: React.ReactNode
+}
 
 interface State extends BaseInput.State {
     dateStr: DateInputRange
@@ -24,7 +26,8 @@ class InputDatepicker extends BaseInput.Component<Props, State> {
             to: moment()
         },
         format: 'DD-MM-YYYY',
-        showBtn: '#'
+        showBtn: '#',
+        separate: '',
     }
 
     refElem: React.RefObject<HTMLDivElement> = React.createRef()
@@ -77,7 +80,7 @@ class InputDatepicker extends BaseInput.Component<Props, State> {
     }
 
     render() {
-        let { showBtn, ...rest } = this.props
+        let { showBtn, separate, ...rest } = this.props
         let { popupHide, dateStr, error } = this.state
         return (
             <div className="dp-input --range" ref={this.refElem}>
@@ -88,6 +91,7 @@ class InputDatepicker extends BaseInput.Component<Props, State> {
                         onChange={this.onInputChange('from')}
                         onFocus={() => this.onToggle(false)}
                     />
+                    {separate}
                     <input 
                         type="text"
                         value={dateStr.to}
