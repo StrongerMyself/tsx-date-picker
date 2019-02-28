@@ -125,7 +125,7 @@
             .dp-blockCell.--select
                 position: relative
                 span
-                    background-color: rgba($accentColor, 0.5)
+                    background-color: rgba($accentColor, 0.15)
                 &::before
                     content: ''
                     position: absolute
@@ -134,25 +134,19 @@
                     display: none
                     width: 50%
                     height: 100%
-                    background-color: rgba($accentColor, 0.5)
-                &.--single
-                    background-color: transparent
-                    span
-                        background-color: $accentColor
-                        border-radius: 10em
-                &.--first
-                    background-color: transparent
-                    span
-                        background-color: $accentColor
-                        border-radius: 10em
-                    &::before
-                        display: block
-                        right: 0
+                    background-color: rgba($accentColor, 0.15)
+                &.--single,
+                &.--first,
                 &.--last
                     background-color: transparent
                     span
                         background-color: $accentColor
                         border-radius: 10em
+                &.--first
+                    &::before
+                        display: block
+                        right: 0
+                &.--last
                     &::before
                         display: block
                         left: 0
