@@ -61,10 +61,8 @@ class Grid extends BaseGrid.Component<Props, State> {
         let { onChange, format, disablePast, disableFuture } = this.props
         let pastState = disablePast ? this.checkPast(dateIn) : false
         let futureState = disableFuture ? this.checkFuture(dateIn) : false
-        console.log(dateIn.format(format))
         if (!pastState && !futureState) {
             let { viewDate, date } = this.setInterval(dateIn)
-            console.log(viewDate.format(format), date.from.format(format), date.to.format(format))
             this.setState({ viewDate }, () => {
                 onChange(date, format)
             })
@@ -83,7 +81,7 @@ class Grid extends BaseGrid.Component<Props, State> {
         let { viewDate } = this.state
         let { disableFuture, disablePast, leftBtn, rightBtn } = this.props
         return (
-            <div className={this.className}>
+            <div className={`${this.className} --range`}>
                 <TopGrid
                     viewDate={viewDate}
                     onClickArr={this.onClickArr}

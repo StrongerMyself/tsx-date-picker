@@ -23,9 +23,9 @@ class DayGrid extends React.Component<Props, {}> {
             .startOf('week')
         for (let i = 0; i <= weekLen; i++) {
             outElem.push(
-                <div key={i} className="dp-block__row">
+                <React.Fragment key={i}>
                     {this.renderWeek()}
-                </div>
+                </React.Fragment>
             )
         }
         return outElem
@@ -48,7 +48,6 @@ class DayGrid extends React.Component<Props, {}> {
                     onClick={onClick}
                 >{date.date()}</div>
             )
-            
             this.renderDate.add(1, 'day')
         }
         return outElem
@@ -56,9 +55,9 @@ class DayGrid extends React.Component<Props, {}> {
     
     render() {
         return (
-            <>
+            <div className="dp-block__row">
                 {this.renderMonth()}
-            </>
+            </div>
         )
     }
 }

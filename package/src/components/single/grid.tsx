@@ -58,7 +58,7 @@ class Grid extends BaseGrid.Component<Props, State> {
         let { viewDate } = this.state
         let { disableFuture, disablePast, leftBtn, rightBtn } = this.props
         return (
-            <div className={this.className}>
+            <div className={`${this.className} --single`}>
                 <TopGrid
                     viewDate={viewDate}
                     onClickArr={this.onClickArr}
