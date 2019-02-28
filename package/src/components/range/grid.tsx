@@ -25,11 +25,23 @@ class Grid extends BaseGrid.Component<Props, State> {
         viewDate: this.date.from,
     }
 
+    componentDidMount() {
+        this.prepareSelectClass()
+    }
+
     componentDidUpdate(prevProps) {
-        let prevDateStr = prevProps.date.from.format('YYYY-MM-DD')
-        let nextDateStr = this.date.from.format('YYYY-MM-DD')
-        if (prevDateStr !== nextDateStr) {
-            this.setState({viewDate: moment(this.date.from)})
+        let prevFrom = prevProps.date.from.format('YYYY-MM-DD')
+        let nextFrom = this.date.from.format('YYYY-MM-DD')
+        let prevTo = prevProps.date.to.format('YYYY-MM-DD')
+        let nextTo = this.date.to.format('YYYY-MM-DD')
+
+        let isChangeFrom = prevFrom !== nextFrom
+        let isChangeTo = prevTo !== nextTo
+        
+        if (isChangeFrom || isChangeTo) {
+            let viewDate = isChangeFrom ? this.date.from : this.date.to
+            this.setState({viewDate})
+            this.prepareSelectClass()
         }
     }
 
@@ -45,16 +57,12 @@ class Grid extends BaseGrid.Component<Props, State> {
         let { date } = this.props
         let len = date.to.diff(date.from, 'days')
         let dir = dateIn.isBefore(date.from, 'date') ? 'from' : 'to'
-        if (len > 0) {
-            date = {
-                from: moment(dateIn),
-                to: moment(dateIn),
-            }
-        } else {
-            date[dir] = moment(dateIn)
+        let dateOut = {
+            from: (len > 0 || dir === 'from') ? moment(dateIn) : moment(date.from),
+            to: (len > 0 || dir === 'to') ? moment(dateIn) : moment(date.to)
         }
-        let viewDate = (dir === 'from') ? moment(date.from) : moment(date.to)
-        return { date, viewDate }
+        let viewDate = (dir === 'from') ? moment(dateOut.from) : moment(dateOut.to)
+        return { date: dateOut, viewDate }
     }
     
     setDate = (dateIn: moment.Moment) => {
@@ -81,7 +89,7 @@ class Grid extends BaseGrid.Component<Props, State> {
         let { viewDate } = this.state
         let { disableFuture, disablePast, leftBtn, rightBtn } = this.props
         return (
-            <div className={`${this.className} --range`}>
+            <div className={`${this.className} --range`} ref={this.refWrap}>
                 <TopGrid
                     viewDate={viewDate}
                     onClickArr={this.onClickArr}

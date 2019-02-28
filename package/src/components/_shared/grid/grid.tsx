@@ -40,6 +40,8 @@ export class Component<P extends Props, S extends State> extends React.Component
         disableFuture: false,
     }
 
+    refWrap: React.RefObject<HTMLDivElement> = React.createRef()
+
     toggleView = () => {
         let { layer } = this.state
         if (layer === Layers.day) {
@@ -47,7 +49,6 @@ export class Component<P extends Props, S extends State> extends React.Component
         } else {
             layer = Layers.day
         }
-        console.log({layer})
         this.setState({layer})
     }
     
@@ -110,6 +111,21 @@ export class Component<P extends Props, S extends State> extends React.Component
         if (layer === Layers.day) viewDate.add(i, 'M')
         if (layer === Layers.month) viewDate.add(i, 'y')
         this.setState({ viewDate })
+    }
+
+    prepareSelectClass = () => {
+        let refWrap = this.refWrap.current
+        if (!refWrap) return
+        let selectDays = refWrap.querySelectorAll('.dp-block__row.--days .dp-blockCell.--select')
+        let len = selectDays.length
+        if (len === 1) {
+            selectDays[0].classList.add('--single')
+            selectDays[0].classList.remove('--first')
+            selectDays[len - 1].classList.remove('--last')
+        } else if (len > 1) {
+            selectDays[0].classList.add('--first')
+            selectDays[len - 1].classList.add('--last')
+        }
     }
 
     get className() {

@@ -46,16 +46,18 @@ class DayGrid extends React.Component<Props, {}> {
                     key={i} 
                     className={className} 
                     onClick={onClick}
-                >{date.date()}</div>
+                >
+                    <span>{date.date()}</span>
+                </div>
             )
             this.renderDate.add(1, 'day')
         }
         return outElem
     }
-    
+
     render() {
         return (
-            <div className="dp-block__row">
+            <div className="dp-block__row --days">
                 {this.renderMonth()}
             </div>
         )
