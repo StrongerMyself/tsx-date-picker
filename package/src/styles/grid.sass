@@ -63,7 +63,7 @@
             border-radius: 10em
     &.--select
         span
-            color: $white
+            color: $textColorSelec
             background-color: $accentColor
 
 .dp-block
@@ -125,6 +125,7 @@
             .dp-blockCell.--select
                 position: relative
                 span
+                    color: $textColorSelecRangeLine
                     background-color: rgba($accentColor, 0.15)
                 &::before
                     content: ''
@@ -140,6 +141,7 @@
                 &.--last
                     background-color: transparent
                     span
+                        color: $textColorSelec
                         background-color: $accentColor
                         border-radius: 10em
                 &.--first
