@@ -40,13 +40,14 @@ export class Component<P extends Props, S extends State> extends React.Component
         disableFuture: false,
     }
 
-    toggleView() {
+    toggleView = () => {
         let { layer } = this.state
         if (layer === Layers.day) {
             layer = Layers.month
         } else {
             layer = Layers.day
         }
+        console.log({layer})
         this.setState({layer})
     }
     
