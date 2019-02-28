@@ -2,6 +2,7 @@ import * as React from 'react'
 import moment from 'moment'
 
 export interface Props {
+    prefix?: string
     disablePast?: boolean
     disableFuture?: boolean
     format?: string
@@ -35,8 +36,6 @@ export class Component<P extends Props, S extends State> extends React.Component
 
     static defaultProps = {
         format: 'DD-MM-YYYY',
-        leftBtn: '<',
-        rightBtn: '>',
         disablePast: false,
         disableFuture: false,
     }

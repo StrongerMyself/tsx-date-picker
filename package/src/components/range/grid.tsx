@@ -1,7 +1,7 @@
 import * as React from 'react'
 import moment from 'moment'
 
-import { BaseGrid, MonthGrid, WeekGrid, DayGrid } from '../_shared'
+import { BaseGrid, MonthGrid, WeekGrid, DayGrid, TopGrid } from '../_shared'
 
 export type DateRange = {
     from: moment.Moment
@@ -79,23 +79,15 @@ class Grid extends BaseGrid.Component<Props, State> {
     render() {
         let { viewDate } = this.state
         let { disableFuture, disablePast, leftBtn, rightBtn } = this.props
-        let month = viewDate.month()
-        let monthStr = moment.months(month)
-        let year = viewDate.year()
         return (
             <div className={this.className}>
-                <div className="dp-blockTop">
-                    <div className="dp-blockTop__arr" onClick={this.onClickArr(-1)}>
-                       {leftBtn}
-                    </div>
-                    <div onClick={() => this.toggleView()}>
-                        <div className="dp-blockTop__tit --dayLayer">{monthStr} {year}</div>
-                        <div className="dp-blockTop__tit --monthLayer">{year}</div>
-                    </div>
-                    <div className="dp-blockTop__arr" onClick={this.onClickArr(1)}>
-                        {rightBtn}
-                    </div>
-                </div>
+                <TopGrid
+                    viewDate={viewDate}
+                    onClickArr={this.onClickArr}
+                    toggleView={this.toggleView}
+                    leftBtn={leftBtn}
+                    rightBtn={rightBtn}
+                />
                 <div className="dp-block__body">
                     <div className="dp-block__days">
                         <div className="dp-block__row">
