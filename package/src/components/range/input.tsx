@@ -3,7 +3,7 @@ import moment from 'moment'
 
 import { BaseInput } from '../_shared'
 import Popup from './popup'
-import { Props as GridProps } from './grid'
+import { Props as GridProps, DateRange } from './grid'
 
 type DateInputRange = {
     from: string
@@ -43,13 +43,13 @@ class InputDatepicker extends BaseInput.Component<Props, State> {
         error: false
     }
 
-    onChange = (key) => (dateIn) => {
+    onChange = (key: string) => (dateIn: moment.Moment) => {
         let { date, onChange, format } = this.props
         date[key] = moment(dateIn)
         onChange(date, format)
     }
 
-    onInputChange = (key) => (e) => {
+    onInputChange = (key: string) => (e) => {
         let { value } = e.target
         let { error, dateStr } = this.state
         let { format } = this.props
@@ -65,9 +65,9 @@ class InputDatepicker extends BaseInput.Component<Props, State> {
         this.setState({dateStr, error})
     }
 
-    onPopupChange = (date) => {
-        let { autoHide } = this.props
-        this.onChange(date)
+    onPopupChange = (date: DateRange) => {
+        let { autoHide, onChange, format } = this.props
+        onChange(date, format)
         let dateStr = this.dateStr(date)
         this.setState({dateStr, error: false})
         let len = date.to.diff(date.from, 'days')

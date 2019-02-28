@@ -20,7 +20,7 @@ class InputDatepicker extends BaseInput.Component<Props, State> {
 
     refElem: React.RefObject<HTMLDivElement> = React.createRef()
 
-    dateStr(date = this.props.date) {
+    dateStr(date: moment.Moment = this.props.date) {
         let { format } = this.props
         return date.format(format)
     }
@@ -31,7 +31,7 @@ class InputDatepicker extends BaseInput.Component<Props, State> {
         error: false
     }
 
-    onChange = (date) => {
+    onChange = (date: moment.Moment) => {
         let { onChange, format } = this.props
         onChange(moment(date), format)
     }
@@ -51,7 +51,7 @@ class InputDatepicker extends BaseInput.Component<Props, State> {
         this.setState({dateStr: value, error})
     }
 
-    onPopupChange = (date) => {
+    onPopupChange = (date: moment.Moment) => {
         let { autoHide } = this.props
         this.onChange(date)
         let dateStr = this.dateStr(date)

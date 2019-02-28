@@ -57,22 +57,25 @@ class Grid extends BaseGrid.Component<Props, State> {
         return { date, viewDate }
     }
     
-    setDate = (dateIn) => {
-        let { onChange, format, disablePast } = this.props
+    setDate = (dateIn: moment.Moment) => {
+        let { onChange, format, disablePast, disableFuture } = this.props
         let pastState = disablePast ? this.checkPast(dateIn) : false
-        if (!pastState) {
+        let futureState = disableFuture ? this.checkFuture(dateIn) : false
+        console.log(dateIn.format(format))
+        if (!pastState && !futureState) {
             let { viewDate, date } = this.setInterval(dateIn)
+            console.log(viewDate.format(format), date.from.format(format), date.to.format(format))
             this.setState({ viewDate }, () => {
                 onChange(date, format)
             })
         }
     }
 
-    checkSelect = (inDate: moment.Moment) => {
+    checkSelect = (dateIn: moment.Moment) => {
         let { date } = this.props
         return {
-            months: inDate.isBetween(date.from, date.to, 'months', '[]'),
-            days: inDate.isBetween(date.from, date.to, 'days', '[]'),
+            months: dateIn.isBetween(date.from, date.to, 'months', '[]'),
+            days: dateIn.isBetween(date.from, date.to, 'days', '[]'),
         }
     }
 
