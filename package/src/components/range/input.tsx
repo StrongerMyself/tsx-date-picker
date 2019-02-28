@@ -80,7 +80,7 @@ class InputDatepicker extends BaseInput.Component<Props, State> {
         let { showBtn, ...rest } = this.props
         let { popupHide, dateStr, error } = this.state
         return (
-            <div className="dp-input" ref={this.refElem}>
+            <div className="dp-input --range" ref={this.refElem}>
                 <div className={`dp-input__input ${error ? ' --error' : ''}`}>
                     <input 
                         type="text"

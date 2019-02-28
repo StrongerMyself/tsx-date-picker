@@ -9,7 +9,7 @@ class Popup extends BasePopup.Component<Props, {}> {
     render() {
         let { hide, refWrap, onToggle, ...rest } = this.props
         return (
-            <div className={this.className} ref={this.refPopup}>
+            <div className={`${this.className} --single`} ref={this.refPopup}>
                 <Grid {...rest}/>
             </div>
         )

@@ -10,7 +10,7 @@ class DatepickerSingle extends React.Component<Props, State> {
     render() {
         let { ...rest } = this.props
         return (
-            <div className="dp">
+            <div className="dp --range">
                 <Grid {...rest}/>
             </div>
         )
