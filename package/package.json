@@ -16,11 +16,13 @@
     "url": "https://github.com/StrongerMyself/tsx-date-picker/issues"
   },
   "homepage": "https://github.com/StrongerMyself/tsx-date-picker#readme",
-  "devDependencies": {
+  "dependencies": {
     "@types/moment": "^2.13.0",
+    "moment": "^2.24.0"
+  },
+  "devDependencies": {
     "@types/react": "^16.8.2",
     "@types/react-dom": "^16.8.0",
-    "moment": "^2.24.0",
     "react": "^16.8.1",
     "react-dom": "^16.8.1"
   }
