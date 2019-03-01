@@ -29,19 +29,27 @@ class Grid extends BaseGrid.Component<Props, State> {
         this.prepareSelectClass()
     }
 
-    componentDidUpdate(prevProps) {
+    componentDidUpdate(prevProps, prevState) {
         let prevFrom = prevProps.date.from.format('YYYY-MM-DD')
         let nextFrom = this.date.from.format('YYYY-MM-DD')
         let prevTo = prevProps.date.to.format('YYYY-MM-DD')
         let nextTo = this.date.to.format('YYYY-MM-DD')
-
+        
         let isChangeFrom = prevFrom !== nextFrom
         let isChangeTo = prevTo !== nextTo
         
         if (isChangeFrom || isChangeTo) {
             let viewDate = isChangeFrom ? this.date.from : this.date.to
-            this.setState({viewDate})
-            this.prepareSelectClass()
+            this.setState({viewDate}, this.prepareSelectClass)
+        } else {
+            let prevView = prevState.viewDate.format('YYYY-MM-DD')
+            let nextView = this.state.viewDate.format('YYYY-MM-DD')
+
+            let isChangeView = prevView !== nextView
+            
+            if (isChangeView) {
+                this.prepareSelectClass()
+            }
         }
     }
 

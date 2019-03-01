@@ -100,7 +100,7 @@ export class Component<P extends Props, S extends State> extends React.Component
     }
     
     setView = (typeAdd) => (date) => {
-        let { viewDate } = this.state
+        let viewDate = moment(this.state.viewDate)
         let offsetM = date.month() - viewDate.month()
         viewDate.add(offsetM, typeAdd)
         this.setState({ viewDate, layer: Layers.day })
