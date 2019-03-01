@@ -32,22 +32,27 @@ class InputDatepicker extends BaseInput.Component<Props, State> {
         error: false
     }
 
-    onChange = (date: moment.Moment) => {
+    onChange = (date?: moment.Moment) => {
         let { onChange, format } = this.props
-        onChange(moment(date), format)
+        onChange(date, format)
     }
 
     onInputChange = (e) => {
         let { value } = e.target
         let { error } = this.state
-        let { format } = this.props
-        let date = moment(value, format)
-        let inNotValid = this.validInputChange(date, value)
-        if (inNotValid) {
-            error = true
+        if (value !== '') {
+            let { format } = this.props
+            let date = moment(value, format)
+            let inNotValid = this.validInputChange(date, value)
+            if (inNotValid) {
+                error = true
+            } else {
+                this.onChange(date)
+                error = false
+            }
         } else {
-            this.onChange(date)
             error = false
+            this.onChange(null)
         }
         this.setState({dateStr: value, error})
     }

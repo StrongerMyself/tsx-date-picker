@@ -34,9 +34,8 @@ class InputDatepicker extends BaseInput.Component<Props, State> {
 
     dateStr(date = this.props.date): DateInputRange {
         let { format } = this.props
-        let validDateObj = (date && date.from && date.to)
-        let validFrom = (validDateObj && moment.isMoment(date.from))
-        let validTo = (validDateObj && moment.isMoment(date.to))
+        let validFrom = (date && date.from && moment.isMoment(date.from))
+        let validTo = (date && date.to && moment.isMoment(date.to))
         if (validFrom && validTo) {
             return {
                 from: date.from.format(format),
@@ -58,21 +57,29 @@ class InputDatepicker extends BaseInput.Component<Props, State> {
 
     onChange = (key: string) => (dateIn: moment.Moment) => {
         let { date, onChange, format } = this.props
-        date[key] = moment(dateIn)
+        date[key] = dateIn ? moment(dateIn) : null
         onChange(date, format)
     }
 
     onInputChange = (key: string) => (e) => {
         let { value } = e.target
         let { error, dateStr } = this.state
-        let { format } = this.props
-        let date = moment(value, format)
-        let inNotValid = this.validInputChange(date, value)
-        if (inNotValid) {
-            error = true
+        if (value !== '') { 
+            let { format } = this.props
+            let date = moment(value, format)
+            let inNotValid = this.validInputChange(date, value)
+            if (inNotValid) {
+                error = true
+            } else {
+                this.onChange(key)(date)
+                error = false
+            }
         } else {
-            this.onChange(key)(date)
-            error = false
+            error = true
+            if (dateStr.from === '' && dateStr.to === '') {
+                error = false
+            }
+            this.onChange(key)(null)
         }
         dateStr[key] = value
         this.setState({dateStr, error})

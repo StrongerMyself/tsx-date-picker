@@ -31,47 +31,66 @@ class Grid extends BaseGrid.Component<Props, State> {
 
     componentDidUpdate(prevProps, prevState) {
         let date = this.propsDate
+        // console.log(prevProps.date.from === date.from)
+        // console.log({...date})
         if (date) {
-            let prevFrom = ''
-            let prevTo = ''
-            if (prevProps.date) {
-                prevFrom = prevProps.date.from.format('YYYY-MM-DD')
-                prevTo = prevProps.date.to.format('YYYY-MM-DD')
-            }
-            let nextFrom = date.from.format('YYYY-MM-DD')
-            let nextTo = date.to.format('YYYY-MM-DD')
+            // let prevFrom = ''
+            // let prevTo = ''
+            // if (prevProps.date) {
+            //     prevFrom = moment.isMoment(prevProps.date.from) ? prevProps.date.from.format('YYYY-MM-DD') : ''
+            //     prevTo = moment.isMoment(prevProps.date.to) ? prevProps.date.to.format('YYYY-MM-DD') : ''
+            // }
+            // let nextFrom = moment.isMoment(date.from) ? date.from.format('YYYY-MM-DD') : ''
+            // let nextTo = moment.isMoment(date.to) ? date.to.format('YYYY-MM-DD') : ''
             
-            let isChangeFrom = prevFrom !== nextFrom
-            let isChangeTo = prevTo !== nextTo
+            let isChangeFrom = date.from !== null && prevProps.date.from === date.from
+            let isChangeTo = date.to !== null && prevProps.date.to === date.to
             
+            console.log(isChangeFrom, isChangeTo)
             if (isChangeFrom || isChangeTo) {
                 let viewDate = isChangeFrom ? date.from : date.to
-                this.setState({viewDate}, this.prepareSelectClass)
+                // this.setState({viewDate}, this.prepareSelectClass)
             } else {
-                let prevView = prevState.viewDate.format('YYYY-MM-DD')
-                let nextView = this.state.viewDate.format('YYYY-MM-DD')
+                // let prevView = prevState.viewDate.format('YYYY-MM-DD')
+                // let nextView = this.state.viewDate.format('YYYY-MM-DD')
     
-                let isChangeView = prevView !== nextView
+                // let isChangeView = prevView !== nextView
                 
-                if (isChangeView) {
-                    this.prepareSelectClass()
-                }
+                // if (isChangeView) {
+                //     this.prepareSelectClass()
+                // }
             }
+        } else {
+            this.prepareSelectClass()
         }
+        // if (!this.state.viewDate.isValid()) {
+        //     this.setState({viewDate: moment()})
+        // }
     }
 
     get propsDate() {
         let { date } = this.props
-        let isObj = (date && date.from && date.to)
-        let isMoment = isObj && moment.isMoment(date.from) && moment.isMoment(date.to)
-        return isMoment ? date : null
+        let isFromMoment = (date && date.from && moment.isMoment(date.from))
+        let isToMoment = (date && date.to && moment.isMoment(date.to))
+        let isMoment = isFromMoment && isToMoment
+        return isMoment ? date : {
+            from: isFromMoment ? moment() : null,
+            to: isFromMoment ? moment() : null,
+        }
     }
 
     get date(): DateRange {
         let date = this.propsDate
-        return {
-            from: date ? moment(date.from) : moment(),
-            to: date ? moment(date.to) : moment(),
+        if (date) {
+            return {
+                from: date.from ? moment(date.from) : moment(),
+                to: date.to ? moment(date.to) : moment(),
+            }
+        } else {
+            return {
+                from: moment(),
+                to: moment(),
+            }
         }
     }
     

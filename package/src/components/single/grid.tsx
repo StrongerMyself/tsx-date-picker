@@ -42,14 +42,18 @@ class Grid extends BaseGrid.Component<Props, State> {
         return date ? moment(date) : moment()
     }
 
-    setDate = (date) => {
+    setDate = (date?) => {
         let { onChange, format, disablePast } = this.props
-        let pastState = disablePast ? this.checkPast(date) : false
-        if (!pastState) {
-            let viewDate = moment(date)
-            this.setState({ viewDate }, () => {
-                onChange(moment(date), format)
-            })
+        if (date) {
+            let pastState = disablePast ? this.checkPast(date) : false
+            if (!pastState) {
+                let viewDate = moment(date)
+                this.setState({ viewDate }, () => {
+                    onChange(moment(date), format)
+                })
+            }
+        } else {
+            onChange(null, format)
         }
     }
 

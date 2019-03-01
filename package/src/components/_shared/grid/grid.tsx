@@ -55,13 +55,13 @@ export class Component<P extends Props, S extends State> extends React.Component
     checkPast = (date: moment.Moment): boolean => {
         let now = moment().format('YYYY-MM-DD')
         let check = date.format('YYYY-MM-DD')
-        return moment(check).isBefore(now)
+        return moment(check, 'YYYY-MM-DD').isBefore(now)
     }
     
     checkFuture = (date: moment.Moment): boolean => {
         let now = moment().format('YYYY-MM-DD')
         let check = date.format('YYYY-MM-DD')
-        return moment(check).isAfter(now)
+        return moment(check, 'YYYY-MM-DD').isAfter(now)
     }
 
     checkNow = (date: moment.Moment) => {

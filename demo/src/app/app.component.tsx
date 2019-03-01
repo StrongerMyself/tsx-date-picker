@@ -34,7 +34,7 @@ class AppComponent extends React.Component<IProps, IState> {
 
 	onChange = (key) => (dateIn, format) => {
 		let { dates } = this.state
-		let date = moment(dateIn, format)
+		let date = dateIn
 		dates[key] = date
 		this.setState({dates})
 	}
@@ -42,10 +42,13 @@ class AppComponent extends React.Component<IProps, IState> {
 	onChangeRange = (key) => (dateIn, format) => {
 		let { dates } = this.state
 		let date = {
-			from: moment(dateIn.from, format),
-			to: moment(dateIn.to, format),
+			from: dateIn.from,
+			to: dateIn.to,
 		}
 		dates[key] = date
+		if (key === 4) {
+			console.log({dateIn})
+		}
 		this.setState({dates})
 	}
 
