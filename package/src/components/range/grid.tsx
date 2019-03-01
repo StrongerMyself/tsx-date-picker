@@ -9,7 +9,7 @@ export type DateRange = {
 }
 
 export interface Props extends BaseGrid.Props {
-    date: DateRange
+    date?: DateRange
     onChange: (date: DateRange, format: string) => void
 }
 
@@ -30,39 +30,53 @@ class Grid extends BaseGrid.Component<Props, State> {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        let prevFrom = prevProps.date.from.format('YYYY-MM-DD')
-        let nextFrom = this.date.from.format('YYYY-MM-DD')
-        let prevTo = prevProps.date.to.format('YYYY-MM-DD')
-        let nextTo = this.date.to.format('YYYY-MM-DD')
-        
-        let isChangeFrom = prevFrom !== nextFrom
-        let isChangeTo = prevTo !== nextTo
-        
-        if (isChangeFrom || isChangeTo) {
-            let viewDate = isChangeFrom ? this.date.from : this.date.to
-            this.setState({viewDate}, this.prepareSelectClass)
-        } else {
-            let prevView = prevState.viewDate.format('YYYY-MM-DD')
-            let nextView = this.state.viewDate.format('YYYY-MM-DD')
-
-            let isChangeView = prevView !== nextView
+        let date = this.propsDate
+        if (date) {
+            let prevFrom = ''
+            let prevTo = ''
+            if (prevProps.date) {
+                prevFrom = prevProps.date.from.format('YYYY-MM-DD')
+                prevTo = prevProps.date.to.format('YYYY-MM-DD')
+            }
+            let nextFrom = date.from.format('YYYY-MM-DD')
+            let nextTo = date.to.format('YYYY-MM-DD')
             
-            if (isChangeView) {
-                this.prepareSelectClass()
+            let isChangeFrom = prevFrom !== nextFrom
+            let isChangeTo = prevTo !== nextTo
+            
+            if (isChangeFrom || isChangeTo) {
+                let viewDate = isChangeFrom ? date.from : date.to
+                this.setState({viewDate}, this.prepareSelectClass)
+            } else {
+                let prevView = prevState.viewDate.format('YYYY-MM-DD')
+                let nextView = this.state.viewDate.format('YYYY-MM-DD')
+    
+                let isChangeView = prevView !== nextView
+                
+                if (isChangeView) {
+                    this.prepareSelectClass()
+                }
             }
         }
     }
 
-    get date(): DateRange {
+    get propsDate() {
         let { date } = this.props
-        return {
-            from: moment(date.from),
-            to: moment(date.to),
-        }
+        let isObj = (date && date.from && date.to)
+        let isMoment = isObj && moment.isMoment(date.from) && moment.isMoment(date.to)
+        return isMoment ? date : null
     }
 
+    get date(): DateRange {
+        let date = this.propsDate
+        return {
+            from: date ? moment(date.from) : moment(),
+            to: date ? moment(date.to) : moment(),
+        }
+    }
+    
     setInterval = (dateIn: moment.Moment): {date: DateRange, viewDate: moment.Moment} => {
-        let { date } = this.props
+        let date = this.date
         let len = date.to.diff(date.from, 'days')
         let dir = dateIn.isBefore(date.from, 'date') ? 'from' : 'to'
         let dateOut = {
@@ -86,10 +100,17 @@ class Grid extends BaseGrid.Component<Props, State> {
     }
 
     checkSelect = (dateIn: moment.Moment) => {
-        let { date } = this.props
-        return {
-            months: dateIn.isBetween(date.from, date.to, 'months', '[]'),
-            days: dateIn.isBetween(date.from, date.to, 'days', '[]'),
+        let date = this.propsDate
+        if (date) {
+            return {
+                months: dateIn.isBetween(date.from, date.to, 'months', '[]'),
+                days: dateIn.isBetween(date.from, date.to, 'days', '[]'),
+            }
+        } else {
+            return {
+                months: false,
+                days: false,
+            }
         }
     }
 

@@ -4,7 +4,7 @@ import moment from 'moment'
 import { BaseGrid, MonthGrid, WeekGrid, DayGrid, TopGrid } from '../_shared'
 
 export interface Props extends BaseGrid.Props {
-    date: moment.Moment
+    date?: moment.Moment
     onChange: (date: moment.Moment, format: string) => void
 }
 
@@ -21,15 +21,25 @@ class Grid extends BaseGrid.Component<Props, State> {
     }
 
     componentDidUpdate(prevProps) {
-        let prevDateStr = prevProps.date.format('YYYY-MM-DD')
-        let nextDateStr = this.date.format('YYYY-MM-DD')
-        if (prevDateStr !== nextDateStr) {
-            this.setState({viewDate: moment(this.date)})
+        let date = this.propsDate
+        if (date) {
+            let prevDateStr = prevProps.date ? prevProps.date.format('YYYY-MM-DD') : ''
+            let nextDateStr = date.format('YYYY-MM-DD')
+            if (prevDateStr !== nextDateStr) {
+                this.setState({viewDate: moment(date)})
+            }
         }
     }
 
+    get propsDate() {
+        let { date } = this.props
+        let isMoment = (date && moment.isMoment(date))
+        return isMoment ? date : null
+    }
+
     get date() {
-        return moment(this.props.date)
+        let date = this.propsDate
+        return date ? moment(date) : moment()
     }
 
     setDate = (date) => {
@@ -44,13 +54,20 @@ class Grid extends BaseGrid.Component<Props, State> {
     }
 
     checkSelect = (inDate: moment.Moment) => {
-        let { date } = this.props
-        let yearState = inDate.year() === date.year()
-        let monthState = inDate.month() === date.month()
-        let dayState = inDate.date() === date.date()
-        return {
-            months: (yearState && monthState),
-            days: (yearState && monthState && dayState),
+        let date = this.propsDate
+        if (date) {
+            let yearState = inDate.year() === date.year()
+            let monthState = inDate.month() === date.month()
+            let dayState = inDate.date() === date.date()
+            return {
+                months: (yearState && monthState),
+                days: (yearState && monthState && dayState),
+            }
+        } else {
+            return {
+                months: false,
+                days: false,
+            }
         }
     }
 

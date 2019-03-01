@@ -34,9 +34,19 @@ class InputDatepicker extends BaseInput.Component<Props, State> {
 
     dateStr(date = this.props.date): DateInputRange {
         let { format } = this.props
-        return {
-            from: date.from.format(format),
-            to: date.to.format(format)
+        let validDateObj = (date && date.from && date.to)
+        let validFrom = (validDateObj && moment.isMoment(date.from))
+        let validTo = (validDateObj && moment.isMoment(date.to))
+        if (validFrom && validTo) {
+            return {
+                from: date.from.format(format),
+                to: date.to.format(format),
+            }
+        } else {
+            return {
+                from: '',
+                to: '',
+            }
         }
     }
 
@@ -87,6 +97,7 @@ class InputDatepicker extends BaseInput.Component<Props, State> {
                 <div className={`dp-input__input ${error ? ' --error' : ''}`}>
                     <input 
                         type="text"
+                        placeholder={rest.format}
                         value={dateStr.from}
                         onChange={this.onInputChange('from')}
                         onFocus={() => this.onToggle(false)}
@@ -94,6 +105,7 @@ class InputDatepicker extends BaseInput.Component<Props, State> {
                     {separate}
                     <input 
                         type="text"
+                        placeholder={rest.format}
                         value={dateStr.to}
                         onChange={this.onInputChange('to')}
                         onFocus={() => this.onToggle(false)}

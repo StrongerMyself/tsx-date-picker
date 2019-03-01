@@ -107,7 +107,8 @@ export class Component<P extends Props, S extends State> extends React.Component
     }
     
     onClickArr = (i) => () => {
-        let { layer, viewDate } = this.state
+        let { layer } = this.state
+        let viewDate = moment(this.state.viewDate)
         if (layer === Layers.day) viewDate.add(i, 'M')
         if (layer === Layers.month) viewDate.add(i, 'y')
         this.setState({ viewDate })

@@ -15,15 +15,20 @@ class AppComponent extends React.Component<IProps, IState> {
 		dates: {
 			0: moment(),
 			1: moment(),
-			2: moment(),
-			3: { from: moment(), to: moment() },
+			2: null,
+			3: moment(),
 			4: { from: moment(), to: moment() },
-			5: moment(),
-			6: moment(),
-			7: moment(),
-			8: { from: moment(), to: moment() },
-			9: { from: moment(), to: moment() },
-			10: { from: moment(), to: moment() },
+			5: { from: moment(), to: moment() },
+			6: null,
+			7: { from: moment(), to: moment() },
+			8: moment(),
+			9: moment(),
+			10: moment(),
+			11: null,
+			12: { from: moment(), to: moment() },
+			13: { from: moment(), to: moment() },
+			14: { from: moment(), to: moment() },
+			15: null,
 		},
 	}
 
@@ -66,65 +71,110 @@ class AppComponent extends React.Component<IProps, IState> {
 						/>
 					</div>
 					<div className="page__row">
+						<div className="page__tit">DateInput (empty)</div>
+						<DPSingle.DatePickerInput
+							date={dates[2]}
+							onChange={this.onChange(2)}
+						/>
+					</div>
+					<div className="page__row">
+						<div className="page__tit">DateInput (noPast)</div>
+						<DPSingle.DatePickerInput
+							date={dates[3]}
+							onChange={this.onChange(3)}
+						/>
+					</div>
+					<div className="page__row">
 						<div className="page__tit">DateInputRange</div>
 						<DPRange.DatePickerInput
-							date={dates[3]}
-							onChange={this.onChangeRange(3)}
+							date={dates[4]}
+							onChange={this.onChangeRange(4)}
 						/>
 					</div>
 					<div className="page__row">
 						<div className="page__tit">DateInputRange (autoHide)</div>
 						<DPRange.DatePickerInput
-							date={dates[4]}
-							onChange={this.onChangeRange(4)}
+							date={dates[5]}
+							onChange={this.onChangeRange(5)}
 							autoHide={true}
 							disablePast={true}
 						/>
 					</div>
 					<div className="page__row">
+						<div className="page__tit">DateInputRange (empty)</div>
+						<DPRange.DatePickerInput
+							date={dates[6]}
+							onChange={this.onChangeRange(6)}
+							autoHide={true}
+							disablePast={true}
+						/>
+					</div>
+					<div className="page__row">
+						<div className="page__tit">DateInputRange (noFuture)</div>
+						<DPRange.DatePickerInput
+							date={dates[7]}
+							onChange={this.onChangeRange(7)}
+							disableFuture={true}
+						/>
+					</div>
+					<div className="page__row">
 						<div className="page__tit">DateGrid</div>
 						<DPSingle.Datepicker
-							date={dates[5]}
-							onChange={this.onChange(5)}
+							date={dates[8]}
+							onChange={this.onChange(8)}
 						/>
 					</div>
 					<div className="page__row">
 						<div className="page__tit">DateGrid (notPast)</div>
 						<DPSingle.Datepicker
-							date={dates[6]}
-							onChange={this.onChange(6)}
+							date={dates[9]}
+							onChange={this.onChange(9)}
 							disablePast={true}
 						/>
 					</div>
 					<div className="page__row">
 						<div className="page__tit">DateGrid (notFuture)</div>
 						<DPSingle.Datepicker
-							date={dates[7]}
-							onChange={this.onChange(7)}
+							date={dates[10]}
+							onChange={this.onChange(10)}
 							disableFuture={true}
 						/>
 					</div>
 					<div className="page__row">
-						<div className="page__tit">DateRangeGrid </div>
+						<div className="page__tit">DateGrid (empty)</div>
+						<DPSingle.Datepicker
+							date={dates[11]}
+							onChange={this.onChange(11)}
+						/>
+					</div>
+					<div className="page__row">
+						<div className="page__tit">DateRangeGrid</div>
 						<DPRange.Datepicker
-							date={dates[8]}
-							onChange={this.onChangeRange(8)}
+							date={dates[12]}
+							onChange={this.onChangeRange(12)}
 						/>
 					</div>
 					<div className="page__row">
 						<div className="page__tit">DateRangeGrid (noPast)</div>
 						<DPRange.Datepicker
-							date={dates[9]}
-							onChange={this.onChangeRange(9)}
+							date={dates[13]}
+							onChange={this.onChangeRange(13)}
 							disablePast={true}
 						/>
 					</div>
 					<div className="page__row">
 						<div className="page__tit">DateRangeGrid (notFuture)</div>
 						<DPRange.Datepicker
-							date={dates[10]}
-							onChange={this.onChangeRange(10)}
+							date={dates[14]}
+							onChange={this.onChangeRange(14)}
 							disableFuture={true}
+						/>
+					</div>
+					<div className="page__row">
+						<div className="page__tit">DateRangeGrid (empty)</div>
+						<DPRange.Datepicker
+							date={dates[15]}
+							onChange={this.onChangeRange(15)}
 						/>
 					</div>
 				</div>

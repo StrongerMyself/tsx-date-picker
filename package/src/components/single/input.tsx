@@ -22,7 +22,8 @@ class InputDatepicker extends BaseInput.Component<Props, State> {
 
     dateStr(date: moment.Moment = this.props.date) {
         let { format } = this.props
-        return date.format(format)
+        let validDate = date && moment.isMoment(date)
+        return validDate ? date.format(format) : ''
     }
 
     state = {
@@ -69,6 +70,7 @@ class InputDatepicker extends BaseInput.Component<Props, State> {
                 <div className={`dp-input__input ${error ? ' --error' : ''}`}>
                     <input 
                         type="text"
+                        placeholder={rest.format}
                         value={dateStr}
                         onChange={this.onInputChange}
                         onFocus={() => this.onToggle(false)}
