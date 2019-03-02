@@ -53,12 +53,14 @@ export class Component extends React.Component<Props, State> {
 
     refWrap: React.RefObject<HTMLDivElement> = React.createRef()
 
-    shouldComponentUpdate(nextProps) {
-        let { initDate } = this.props
-        if (initDate && initDate.toString() !== nextProps.initDate.toString()) {
-            return false
+    shouldComponentUpdate(nextProps, nextState) {
+        let { viewDate, layer } = this.state
+        let isChangeViewDate = viewDate.toString() !== nextState.viewDate.toString()
+        let isChangeLayer = layer !== nextState.layer
+        if (isChangeViewDate || isChangeLayer) {
+            return true
         }
-        return true
+        return false
     }
 
     get initDate() {
