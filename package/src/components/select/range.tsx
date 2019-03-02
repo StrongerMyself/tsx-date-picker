@@ -12,26 +12,27 @@ class Range extends Select.Component<Props, null, Value> implements Select.Inter
     initDate = moment.isMoment(this.props.value[0]) ? moment(this.props.value[0]) : null
     prefix  = '--range'
 
-    // TODO:
-    // componentDidUpdate(prevProps) {
-    //     let { value } = this.props
-    //     try {
-    //         let valueStr = value.format('YYYY-MM-DD')
-    //         let valuePrevStr = prevProps.value.format('YYYY-MM-DD')
-    //         let isChangeVal = (valueStr !== valuePrevStr)
-    //         if (isChangeVal) {
-    //             this.setInitDate(value)
-    //         }
-    //     } catch (error) {
-    //         let isReset = (value === null && prevProps.value !== null)
-    //         let isSelect = (value !== null && prevProps.value === null)
-    //         if (isReset) {
-    //             this.transformElemsReset()
-    //         } else if (isSelect) {
-    //             this.setInitDate(value)
-    //         }
-    //     }
-    // }
+    componentDidUpdate(prevProps) {
+        let { value } = this.props
+        for (let i = 0; i < 2; i++) {
+            try {
+                let valueStr = value[i].format('YYYY-MM-DD')
+                let valuePrevStr = prevProps.value[i].format('YYYY-MM-DD')
+                let isChangeVal = (valueStr !== valuePrevStr)
+                if (isChangeVal) {
+                    this.setInitDate(value[i])
+                }
+            } catch (error) {
+                let isReset = (value[i] === null && prevProps.value[i] !== null)
+                let isSelect = (value[i] !== null && prevProps.value[i] === null)
+                if (isReset) {
+                    this.transformElemsReset()
+                } else if (isSelect) {
+                    this.setInitDate(value[i])
+                }
+            }
+        }
+    }
     
     onSelect = (date = null, isChange = true) => {
         let refDays = this.refDays.current
@@ -46,17 +47,15 @@ class Range extends Select.Component<Props, null, Value> implements Select.Inter
                 this.transformElemsReset()
             }
             if (isChange) {
-                onChange(value)
+                onChange([...value])
             }
         }
     }
 
     setInterval = (dateIn: moment.Moment): Value => {
         let { value } = this.props
-        let from = value[0]
-        let to = value[1]
-        if (!from) from = moment(dateIn)
-        if (!to) to = moment(dateIn)
+        let from = value[0] ? moment(value[0]) : moment(dateIn)
+        let to = value[1] ? moment(value[1]) : moment(dateIn)
         let len = to.diff(from, 'days')
         if (len > 0) {
             from = moment(dateIn)

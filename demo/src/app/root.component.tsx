@@ -24,6 +24,7 @@ class RootComponent extends React.Component<Props, State> {
 	onChange = (key: string) => (value: any) => {
 		let { dates } = this.state
 		dates[key] = value
+		console.log({value})
 		this.setState({dates})
 	}
 
@@ -49,8 +50,8 @@ class RootComponent extends React.Component<Props, State> {
 				{/* <Range
 					value={dates.range}
 					onChange={this.onChange('range')}
-				/>
-				<Multy
+				/> */}
+				{/* <Multy
 					value={dates.multy}
 					onChange={this.onChange('multy')}
 				/> */}

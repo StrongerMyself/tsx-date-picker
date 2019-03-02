@@ -49,12 +49,21 @@ class InputRange extends React.Component<Props, State> {
         } else {
             error = false
         }
-        innerValue = [val_0, val_1]
+        innerValue = error ? innerValue : this.sortValue([val_0, val_1])
         this.setState({innerValue, error}, () => {
             if (!error) {
                 this.props.onChange(innerValue)
             }
         })
+    }
+
+    sortValue = (value) => {
+        let { format } = this.props
+        let date = [moment(value[0], format), moment(value[1], format)]
+        if (date[0].isAfter(date[1])) {
+            return [date[1].format(format), date[0].format(format)]
+        }
+        return value
     }
     
     invalidInnerValue = (value: string): boolean => {
@@ -96,18 +105,14 @@ class InputRange extends React.Component<Props, State> {
     getValidDate = () => {
         let { format } = this.props
         let { innerValue } = this.state
-        let invalidInnerValue_0 = this.invalidInnerValue(innerValue[0])
-        let invalidInnerValue_1 = this.invalidInnerValue(innerValue[1])
         let date = []
-        if (invalidInnerValue_0) {
-            date.push(null)
-        } else {
-            date.push(moment(innerValue[0], format))
-        }
-        if (invalidInnerValue_1) {
-            date.push(null)
-        } else {
-            date.push(moment(innerValue[1], format))
+        for (let i = 0; i < 2; i++) { 
+            let invalidInnerValue = this.invalidInnerValue(innerValue[i])
+            if (invalidInnerValue) {
+                date.push(null)
+            } else {
+                date.push(moment(innerValue[i], format))
+            }
         }
         return date
     }
