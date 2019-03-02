@@ -11,6 +11,27 @@ class Range extends Select.Component<Props, null, Value> implements Select.Inter
 
     initDate = moment.isMoment(this.props.value[0]) ? moment(this.props.value[0]) : null
     prefix  = '--range'
+
+    // TODO:
+    // componentDidUpdate(prevProps) {
+    //     let { value } = this.props
+    //     try {
+    //         let valueStr = value.format('YYYY-MM-DD')
+    //         let valuePrevStr = prevProps.value.format('YYYY-MM-DD')
+    //         let isChangeVal = (valueStr !== valuePrevStr)
+    //         if (isChangeVal) {
+    //             this.setInitDate(value)
+    //         }
+    //     } catch (error) {
+    //         let isReset = (value === null && prevProps.value !== null)
+    //         let isSelect = (value !== null && prevProps.value === null)
+    //         if (isReset) {
+    //             this.transformElemsReset()
+    //         } else if (isSelect) {
+    //             this.setInitDate(value)
+    //         }
+    //     }
+    // }
     
     onSelect = (date = null, isChange = true) => {
         let refDays = this.refDays.current

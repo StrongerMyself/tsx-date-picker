@@ -1,6 +1,6 @@
 import * as React from 'react'
 import moment from 'moment'
-import { Grid, Input, Single, Range, Multy } from '../../../package'
+import { Grid, Input, Single, Range, Multy, InputRange } from '../../../package'
 
 
 interface Props {}
@@ -14,6 +14,7 @@ class RootComponent extends React.Component<Props, State> {
 	state = {
 		dates: {
 			input: '',
+			inputRange: [],
 			single: moment('2019-02-02'),
 			range: [],
 			multy: [],
@@ -32,9 +33,13 @@ class RootComponent extends React.Component<Props, State> {
 			<div>
 				{/* <Grid.Component/> */}
 				<br/>
-				<Input
+				{/* <Input
 					value={dates.input}
-					onChange={this.onChange('single')}
+					onChange={this.onChange('input')}
+				/> */}
+				<InputRange
+					value={dates.inputRange}
+					onChange={this.onChange('inputRange')}
 				/>
 				<br/>
 				{/* <Single
