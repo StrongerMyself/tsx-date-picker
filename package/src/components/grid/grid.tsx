@@ -101,8 +101,8 @@ export class Component extends React.Component<Props, State> {
         let nowState = this.checkNow(date)[key]
 
         let now = moment().format('YYYY-MM-DD')
-        let pastState = disablePast ? date.isBefore(now) : false
-        let futureState = disableFuture ? date.isAfter(now) : false
+        let pastState = disablePast ? date.isAfter(now) : false
+        let futureState = disableFuture ? date.isBefore(now) : false
         
         let notClick = (otherDay || pastState || futureState)
 

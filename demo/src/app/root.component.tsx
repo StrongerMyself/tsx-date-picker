@@ -36,6 +36,7 @@ class RootComponent extends React.Component<Props, State> {
 						<Input
 							value={dates.input}
 							onChange={this.onChange('input')}
+							disableFuture={true}
 						/>
 					</div>
 					<div className="page__row">
@@ -43,6 +44,7 @@ class RootComponent extends React.Component<Props, State> {
 						<InputRange
 							value={dates.inputRange}
 							onChange={this.onChange('inputRange')}
+							disablePast={true}
 						/>
 					</div>
 					<div className="page__row">
@@ -64,6 +66,15 @@ class RootComponent extends React.Component<Props, State> {
 						<Multy
 							value={dates.multy}
 							onChange={this.onChange('multy')}
+						/>
+					</div>
+					<div className="page__row">
+						<div className="page__tit">Disable past or future</div>
+						<Multy
+							value={dates.multy}
+							onChange={this.onChange('multy')}
+							disableFuture={true}
+							disablePast={true}
 						/>
 					</div>
 				</div>

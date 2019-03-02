@@ -56,17 +56,14 @@ class Input extends React.Component<Props, State> {
     
     invalidInnerValue = (value: string): boolean => {
         let { format, disablePast, disableFuture } = this.props
-        
         let date = moment(value, format)
+
         let validDate = (date.format() === 'Invalid date')
         let validLen = value.length !== format.length
         
-        let pastState = false, futureState = false
-        if (validDate && validLen) {
-            let now = moment().format('YYYY-MM-DD')
-            pastState = disablePast ? date.isBefore(now) : false
-            futureState = disableFuture ? date.isAfter(now) : false
-        }
+        let now = moment().format('YYYY-MM-DD')
+        let pastState = disablePast ? date.isBefore(now) : false
+        let futureState = disableFuture ? date.isAfter(now) : false
 
         return (validDate || validLen || pastState || futureState)
     }
@@ -101,7 +98,7 @@ class Input extends React.Component<Props, State> {
     }
 
     render() {
-        let { showBtn, format } = this.props
+        let { showBtn, format, disableFuture, disablePast } = this.props
         let { innerValue, popupHide, error } = this.state
         let date = this.getValidDate()
         return (
@@ -129,6 +126,8 @@ class Input extends React.Component<Props, State> {
                     <Single
                         value={date}
                         onChange={this.onGridChange}
+                        disablePast={disableFuture}
+                        disableFuture={disablePast}
                     />
                 </Popup>
             </div>
