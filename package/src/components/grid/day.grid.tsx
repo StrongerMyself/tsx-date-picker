@@ -4,9 +4,10 @@ import { CheckDateFunc } from './grid'
 import { IGridContext } from './context.grid'
 
 interface Props extends IGridContext {
-    viewDate: moment.Moment
     disablePast: boolean
     disableFuture: boolean
+    viewDate: moment.Moment
+    setView: (date: moment.Moment) => void
     onCheckDate: CheckDateFunc
 }
 
@@ -21,7 +22,7 @@ class DayGrid extends React.Component<Props, {}> {
     refWrap: React.RefObject<HTMLDivElement> = React.createRef()
 
     componentDidMount() {
-        this.props.onRender(this.refWrap)
+        this.props.onRender(this.refWrap, this.props.setView)
     }
 
     renderMonth() {

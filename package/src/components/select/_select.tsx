@@ -2,16 +2,15 @@ import * as React from 'react'
 import moment from 'moment'
 
 import Grid, { GridContext } from '../grid'
+import { IGridContext } from '../grid/context.grid'
 
-export interface Interface<V> {
+export interface Interface<V> extends IGridContext {
     refDays: React.RefObject<HTMLDivElement>
-    onRender: (ref: React.RefObject<HTMLDivElement>) => void
-    onSetView: (date: moment.Moment) => void
-    onClickDay: (date: moment.Moment) => void
     onSelect: (date: moment.Moment, isChange: boolean) => void
     transformElemsSelect: (value?: V) => void
     transformElemsReset: () => void
     resetElem: (elem: Element) => void
+    setInterval?: (dateIn: moment.Moment) => moment.Moment[]
 }
 
 export interface Props<Value> {
@@ -28,14 +27,16 @@ export class Component<P extends Props<V>, S, V> extends React.Component<P, S> i
 
     refDays: React.RefObject<HTMLDivElement>
     initDate: moment.Moment = moment()
+    setInitDate: (date: moment.Moment) => void
     prefix: string = ''
 
-    onRender = (ref: React.RefObject<HTMLDivElement>) => {
+    onRender = (ref: React.RefObject<HTMLDivElement>, setView) => {
         this.refDays = ref
+        this.setInitDate = setView
         this.onSelect(this.initDate, false)
     }
 
-    onSetView = (date: moment.Moment) => {
+    onSetView = () => {
         this.transformElemsSelect()
     }
 
@@ -44,6 +45,10 @@ export class Component<P extends Props<V>, S, V> extends React.Component<P, S> i
     }
     
     onSelect = (date: moment.Moment = null, isChange = true) => {}
+
+    setInterval = (dateIn: moment.Moment): moment.Moment[] => {
+        return []
+    }
     
     transformElemsSelect = (value: V = this.props.value) => {}
     
@@ -63,6 +68,7 @@ export class Component<P extends Props<V>, S, V> extends React.Component<P, S> i
     }
 
     render() {
+        let { value } = this.props
         return (
             <GridContext.Provider value={{
                 onSetView: this.onSetView,
@@ -71,7 +77,7 @@ export class Component<P extends Props<V>, S, V> extends React.Component<P, S> i
             }}>
                 <Grid.ComponentCtxt
                     prefix={this.prefix}
-                    initDate={this.initDate}
+                    initDate={value}
                 />
             </GridContext.Provider>
         )

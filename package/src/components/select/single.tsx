@@ -9,8 +9,28 @@ interface Props extends Select.Props<Value> {}
 
 class Single extends Select.Component<Props, null, Value> implements Select.Interface<Value> {
 
-    initDate = moment.isMoment(this.props.value) ? moment(this.props.value) : null
+    initDate = this.props.value !== null ? moment(this.props.value) : null
     prefix = '--single'
+
+    componentDidUpdate(prevProps) {
+        let { value } = this.props
+        try {
+            let valueStr = value.format('YYYY-MM-DD')
+            let valuePrevStr = prevProps.value.format('YYYY-MM-DD')
+            let isChangeVal = (valueStr !== valuePrevStr)
+            if (isChangeVal) {
+                this.setInitDate(value)
+            }
+        } catch (error) {
+            let isReset = (value === null && prevProps.value !== null)
+            let isSelect = (value !== null && prevProps.value === null)
+            if (isReset) {
+                this.transformElemsReset()
+            } else if (isSelect) {
+                this.setInitDate(value)
+            }
+        }
+    }
     
     onSelect = (date: moment.Moment = null, isChange = true) => {
         let refDays = this.refDays.current

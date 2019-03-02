@@ -1,6 +1,5 @@
 import Grid from './src/components/grid'
-import Single from './src/components/select/single'
-import Range from './src/components/select/range'
-import Multy from './src/components/select/multy'
+import { Single, Range, Multy } from './src/components/select'
+import Input from './src/components/input/input'
 
-export { Grid, Single, Range, Multy }
+export { Grid, Single, Range, Multy, Input }

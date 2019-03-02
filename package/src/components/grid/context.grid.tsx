@@ -2,15 +2,21 @@ import * as React from 'react'
 import moment from 'moment'
 
 export interface IGridContext {
-	onSetView?: (date: moment.Moment) => void
+	onSetView?: () => void
 	onClickDay?: (date: moment.Moment) => void
-	onRender?: (ref: React.RefObject<HTMLDivElement>) => void
+	onRender?: (
+        ref: React.RefObject<HTMLDivElement>,
+        setView: (date: moment.Moment) => void
+    ) => void
 }
 
 export const GridDefCtxt: IGridContext = {
-	onSetView: (date) => {},
+    onSetView: () => {},
     onClickDay: (date) => {},
-    onRender: (ref = { current: null }) => {},
+    onRender: (
+        ref = { current: null },
+        setView = (date) => {}
+    ) => {},
 }
 
 const GridContext = React.createContext<IGridContext>(GridDefCtxt)

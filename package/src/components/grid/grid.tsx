@@ -83,18 +83,6 @@ export class Component extends React.Component<Props, State> {
         }
         this.setState({layer})
     }
-    
-    checkPast = (date: moment.Moment): boolean => {
-        let now = moment().format('YYYY-MM-DD')
-        let check = date.format('YYYY-MM-DD')
-        return moment(check, 'YYYY-MM-DD').isBefore(now)
-    }
-    
-    checkFuture = (date: moment.Moment): boolean => {
-        let now = moment().format('YYYY-MM-DD')
-        let check = date.format('YYYY-MM-DD')
-        return moment(check, 'YYYY-MM-DD').isAfter(now)
-    }
 
     checkNow = (date: moment.Moment) => {
         let nowDate = moment()
@@ -111,8 +99,10 @@ export class Component extends React.Component<Props, State> {
         let { disablePast, disableFuture } = this.props
 
         let nowState = this.checkNow(date)[key]
-        let pastState = disablePast ? this.checkPast(date) : false
-        let futureState = disableFuture ? this.checkFuture(date) : false
+
+        let now = moment().format('YYYY-MM-DD')
+        let pastState = disablePast ? date.isBefore(now) : false
+        let futureState = disableFuture ? date.isAfter(now) : false
         
         let notClick = (otherDay || pastState || futureState)
 
@@ -122,14 +112,25 @@ export class Component extends React.Component<Props, State> {
         return { className, notClick }
     }
     
-    setView = (typeAdd) => (date) => {
+    setView = (date: moment.Moment) => {
         let { onSetView } = this.props
-        let viewDate = moment(this.state.viewDate)
-        let offsetM = date.month() - viewDate.month()
-        viewDate.add(offsetM, typeAdd)
-        this.setState({ viewDate, layer: Layers.day }, () => {
-            onSetView(moment(viewDate))
-        })
+        let { viewDate, layer } = this.state
+        let oldViewDate = viewDate.format('YYYY-MM')
+        let nextViewDate = moment(date)
+
+        let isChangeMonth = (oldViewDate !== nextViewDate.format('YYYY-MM'))
+        let isSetLayer = (layer === Layers.month)
+        if (isChangeMonth) {
+            this.setState({ viewDate: nextViewDate, layer: Layers.day }, () => {
+                onSetView()
+            })
+        } else if (isSetLayer) {
+            this.setState({ viewDate: nextViewDate, layer: Layers.day }, () => {
+                onSetView()
+            })
+        } else {
+            onSetView()
+        }
     }
     
     onClickArr = (i) => () => {
@@ -139,7 +140,7 @@ export class Component extends React.Component<Props, State> {
         if (layer === Layers.day) viewDate.add(i, 'M')
         if (layer === Layers.month) viewDate.add(i, 'y')
         this.setState({ viewDate }, () => {
-            onSetView(moment(viewDate))
+            onSetView()
         })
     }
 
@@ -154,7 +155,6 @@ export class Component extends React.Component<Props, State> {
     }
 
     render() {
-        console.log('renderGrid')
         let { viewDate } = this.state
         let { onClickDay, onRender, disableFuture, disablePast, leftBtn, rightBtn } = this.props
         return (
@@ -173,6 +173,7 @@ export class Component extends React.Component<Props, State> {
                         </div>
                         <DayGrid
                             onRender={onRender}
+                            setView={this.setView}
                             onClickDay={onClickDay}
                             viewDate={viewDate}
                             disablePast={disablePast}
@@ -183,7 +184,7 @@ export class Component extends React.Component<Props, State> {
                     <div className="dp-block__months">
                         <MonthGrid
                             viewDate={viewDate}
-                            setView={this.setView('M')}
+                            setView={this.setView}
                             disablePast={disablePast}
                             disableFuture={disableFuture}
                             onCheckDate={this.checkDate}
