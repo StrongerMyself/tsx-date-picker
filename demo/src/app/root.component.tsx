@@ -1,7 +1,6 @@
 import * as React from 'react'
 import moment from 'moment'
-import { Grid, Input, Single, Range, Multy, InputRange } from '../../../package'
-
+import { Input, Single, Range, Multy, InputRange } from '../../../package'
 
 interface Props {}
 
@@ -24,37 +23,50 @@ class RootComponent extends React.Component<Props, State> {
 	onChange = (key: string) => (value: any) => {
 		let { dates } = this.state
 		dates[key] = value
-		console.log({value})
 		this.setState({dates})
 	}
 
 	render() {
 		let { dates } = this.state
 		return (
-			<div>
-				{/* <Grid.Component/> */}
-				<br/>
-				{/* <Input
-					value={dates.input}
-					onChange={this.onChange('input')}
-				/> */}
-				<InputRange
-					value={dates.inputRange}
-					onChange={this.onChange('inputRange')}
-				/>
-				<br/>
-				{/* <Single
-					value={dates.single}
-					onChange={this.onChange('single')}
-				/> */}
-				{/* <Range
-					value={dates.range}
-					onChange={this.onChange('range')}
-				/> */}
-				{/* <Multy
-					value={dates.multy}
-					onChange={this.onChange('multy')}
-				/> */}
+			<div className="page">
+				<div className="page__body">
+					<div className="page__row">
+						<div className="page__tit">Input</div>
+						<Input
+							value={dates.input}
+							onChange={this.onChange('input')}
+						/>
+					</div>
+					<div className="page__row">
+						<div className="page__tit">Input Range</div>
+						<InputRange
+							value={dates.inputRange}
+							onChange={this.onChange('inputRange')}
+						/>
+					</div>
+					<div className="page__row">
+						<div className="page__tit">Single</div>
+						<Single
+							value={dates.single}
+							onChange={this.onChange('single')}
+						/>
+					</div>
+					<div className="page__row">
+						<div className="page__tit">Range</div>
+						<Range
+							value={dates.range}
+							onChange={this.onChange('range')}
+						/>
+					</div>
+					<div className="page__row">
+						<div className="page__tit">Multy</div>
+						<Multy
+							value={dates.multy}
+							onChange={this.onChange('multy')}
+						/>
+					</div>
+				</div>
 			</div>
 		)
 	}

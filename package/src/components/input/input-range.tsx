@@ -43,7 +43,7 @@ class InputRange extends React.Component<Props, State> {
         let { error } = this.state
         let val_0 = innerValue[0] || ''
         let val_1 = innerValue[1] || ''
-        if (val_0 && val_1) {
+        if (val_0 || val_1) {
             error = this.invalidInnerValue(val_0)
             error = error || this.invalidInnerValue(val_1)
         } else {
