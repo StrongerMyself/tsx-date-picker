@@ -37,10 +37,10 @@ class RootComponent extends React.Component<Props, State> {
 					onChange={this.onChange('single')}
 				/>
 				<br/>
-				<Single
+				{/* <Single
 					value={dates.single}
 					onChange={this.onChange('single')}
-				/>
+				/> */}
 				{/* <Range
 					value={dates.range}
 					onChange={this.onChange('range')}

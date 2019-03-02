@@ -1,6 +1,7 @@
 import * as React from 'react'
 import moment from 'moment'
 import { Single } from '../select'
+import Popup from '../popup/popup'
 
 interface Props {
     value?: string
@@ -31,7 +32,6 @@ class Input extends React.Component<Props, State> {
     }
 
     refElem: React.RefObject<HTMLDivElement> = React.createRef()
-
 
     state = {
         innerValue: this.props.value,
@@ -81,7 +81,7 @@ class Input extends React.Component<Props, State> {
         let value = date.format(format)
         this.onChange(value)
         if (autoHide) {
-            // this.onToggle(true)
+            this.onTogglePopup(true)
         }
     }
 
@@ -96,6 +96,10 @@ class Input extends React.Component<Props, State> {
         }
     }
 
+    onTogglePopup = (state = !this.state.popupHide) => {
+        this.setState({popupHide: state})
+    }
+
     render() {
         let { showBtn, format } = this.props
         let { innerValue, popupHide, error } = this.state
@@ -108,26 +112,25 @@ class Input extends React.Component<Props, State> {
                         placeholder={format}
                         value={innerValue}
                         onChange={this.onInputChange}
-                        // onFocus={() => this.onToggle(false)}
+                        onFocus={() => this.onTogglePopup(false)}
                     />
                     <div
                         className="dp-input__btn"
-                        // onClick={() => this.onToggle()}
+                        onClick={() => this.onTogglePopup()}
                     >
                         {showBtn}
                     </div>
                 </div>
-                <Single
-                    value={date}
-                    onChange={this.onGridChange}
-                />
-                {/* <Popup
-                    {...rest}
+                <Popup
                     refWrap={this.refElem}
                     hide={popupHide}
-                    onChange={this.onPopupChange}
-                    onToggle={this.onToggle} 
-                /> */}
+                    onToggle={this.onTogglePopup} 
+                >
+                    <Single
+                        value={date}
+                        onChange={this.onGridChange}
+                    />
+                </Popup>
             </div>
         )
     }
