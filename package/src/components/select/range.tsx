@@ -1,40 +1,18 @@
 import * as React from 'react'
 import moment from 'moment'
 
-import Grid, { GridContext } from '../grid'
+import * as Select from './_select'
 
 type Value = moment.Moment[]
 
-interface Props {
-    value?: Value
-    onChange?: (date?: Value) => void
-}
+interface Props extends Select.Props<Value> {}
 
-interface State {}
+class Range extends Select.Component<Props, null, Value> implements Select.Interface<Value> {
 
-class Range extends React.Component<Props, State> {
-
-    static defaultProps = {
-        onChange: (date) => {}
-    }
+    initDate = moment.isMoment(this.props.value[0]) ? moment(this.props.value[0]) : null
+    prefix  = '--range'
     
-    refDays: React.RefObject<HTMLDivElement>
-
-    onRender = (ref) => {
-        this.refDays = ref
-        let { value } = this.props
-        this.onSelect(value[0] || null, false)
-    }
-
-    onSetView = (date: moment.Moment) => {
-        this.transformElemsSelect()
-    }
-
-    onClickDay = (date: moment.Moment) => {
-        this.onSelect(date)
-    }
-    
-    onSelect = (date: moment.Moment = null, isChange = true) => {
+    onSelect = (date = null, isChange = true) => {
         let refDays = this.refDays.current
         if (refDays) {
             let { onChange } = this.props
@@ -73,7 +51,7 @@ class Range extends React.Component<Props, State> {
         return [moment(from), moment(to)]
     }
     
-    transformElemsSelect = (value: Value = this.props.value) => {
+    transformElemsSelect = (value = this.props.value) => {
         let refDays = this.refDays.current
         let from = value[0]
         let to = value[1]
@@ -109,36 +87,6 @@ class Range extends React.Component<Props, State> {
                 toElem.classList.add('--last')
             }
         }
-    }
-    
-    transformElemsReset = () => {
-        let refDays = this.refDays.current
-        let dayElems = refDays.querySelectorAll('.dp-blockCell')
-        dayElems.forEach(dayElem => {
-            this.resetElem(dayElem)
-        })
-    }
-
-    resetElem = (elem) => {
-        elem.classList.remove('--select')
-        elem.classList.remove('--single')
-        elem.classList.remove('--first')
-        elem.classList.remove('--last')
-    }
-
-    render() {
-        return (
-            <GridContext.Provider value={{
-                onSetView: this.onSetView,
-                onClickDay: this.onClickDay,
-                onRender: this.onRender
-            }}>
-                <Grid.ComponentCtxt
-                    prefix="--range"
-                    initDate={this.props.value}
-                />
-            </GridContext.Provider>
-        )
     }
 }
 
