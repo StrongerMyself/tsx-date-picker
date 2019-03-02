@@ -50,7 +50,7 @@ class Single extends Select.Component<Props, null, Value> implements Select.Inte
     
     transformElemsSelect = (value: Value = this.props.value) => {
         let refDays = this.refDays.current
-        let dateStr = value.format('YYYY-MM-DD')
+        let dateStr = value ? value.format('YYYY-MM-DD') : ''
         let dayElems = refDays.querySelectorAll('.dp-blockCell')
         let selectDays = []
         for (let i = 0; i < dayElems.length; i++) {
