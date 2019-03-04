@@ -127,7 +127,7 @@ class InputRange extends React.Component<Props, State> {
         let { innerValue, popupHide, error } = this.state
         let date = this.getValidDate()
         return (
-            <div className="dp-input --single" ref={this.refElem}>
+            <div className="dp-input --range" ref={this.refElem}>
                 <div className={`dp-input__input ${error ? ' --error' : ''}`}>
                     <input 
                         type="text"
