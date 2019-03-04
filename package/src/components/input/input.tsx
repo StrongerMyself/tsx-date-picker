@@ -11,6 +11,8 @@ interface Props {
     onChange?: (value: string) => void
     disablePast?: boolean
     disableFuture?: boolean
+    leftBtn?: React.ReactNode | string
+    rightBtn?: React.ReactNode | string
 }
 
 interface State {
@@ -98,7 +100,7 @@ class Input extends React.Component<Props, State> {
     }
 
     render() {
-        let { showBtn, format, disableFuture, disablePast } = this.props
+        let { showBtn, format, disableFuture, disablePast, leftBtn, rightBtn } = this.props
         let { innerValue, popupHide, error } = this.state
         let date = this.getValidDate()
         return (
@@ -128,6 +130,8 @@ class Input extends React.Component<Props, State> {
                         onChange={this.onGridChange}
                         disablePast={disableFuture}
                         disableFuture={disablePast}
+                        leftBtn={leftBtn}
+                        rightBtn={rightBtn}
                     />
                 </Popup>
             </div>

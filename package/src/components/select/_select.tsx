@@ -15,18 +15,19 @@ export interface Interface<V> extends IGridContext {
 
 export interface Props<Value> {
     value?: Value
+    format?: string
     onChange?: (date?: Value) => void
     disablePast?: boolean
     disableFuture?: boolean
+    leftBtn?: React.ReactNode | string
+    rightBtn?: React.ReactNode | string
 }
 
 export class Component<P extends Props<V>, S, V> extends React.Component<P, S> implements Interface<V> {
     
     static defaultProps = {
         value: null,
-        onChange: (date) => {},
-        disablePast: false,
-        disableFuture: false,
+        onChange: (date) => {}
     }
 
     refDays: React.RefObject<HTMLDivElement>
@@ -72,7 +73,7 @@ export class Component<P extends Props<V>, S, V> extends React.Component<P, S> i
     }
 
     render() {
-        let { value, disablePast, disableFuture } = this.props
+        let { value, format, disablePast, disableFuture, leftBtn, rightBtn } = this.props
         return (
             <GridContext.Provider value={{
                 onSetView: this.onSetView,
@@ -81,9 +82,12 @@ export class Component<P extends Props<V>, S, V> extends React.Component<P, S> i
             }}>
                 <Grid.ComponentCtxt
                     prefix={this.prefix}
+                    format={format}
                     initDate={value}
                     disablePast={disablePast}
                     disableFuture={disableFuture}
+                    leftBtn={leftBtn}
+                    rightBtn={rightBtn}
                 />
             </GridContext.Provider>
         )

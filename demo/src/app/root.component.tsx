@@ -1,6 +1,6 @@
 import * as React from 'react'
 import moment from 'moment'
-import { Input, Single, Range, Multy, InputRange } from '../../../package'
+import { DpSingle, DpRange, DpMulty, DpSingleInput, DpRangeInput } from './components/controls'
 
 interface Props {}
 
@@ -33,7 +33,7 @@ class RootComponent extends React.Component<Props, State> {
 				<div className="page__body">
 					<div className="page__row">
 						<div className="page__tit">Input</div>
-						<Input
+						<DpSingleInput
 							value={dates.input}
 							onChange={this.onChange('input')}
 							disableFuture={true}
@@ -41,7 +41,7 @@ class RootComponent extends React.Component<Props, State> {
 					</div>
 					<div className="page__row">
 						<div className="page__tit">Input Range</div>
-						<InputRange
+						<DpRangeInput
 							value={dates.inputRange}
 							onChange={this.onChange('inputRange')}
 							disablePast={true}
@@ -49,28 +49,28 @@ class RootComponent extends React.Component<Props, State> {
 					</div>
 					<div className="page__row">
 						<div className="page__tit">Single</div>
-						<Single
+						<DpSingle
 							value={dates.single}
 							onChange={this.onChange('single')}
 						/>
 					</div>
 					<div className="page__row">
 						<div className="page__tit">Range</div>
-						<Range
+						<DpRange
 							value={dates.range}
 							onChange={this.onChange('range')}
 						/>
 					</div>
 					<div className="page__row">
 						<div className="page__tit">Multy</div>
-						<Multy
+						<DpMulty
 							value={dates.multy}
 							onChange={this.onChange('multy')}
 						/>
 					</div>
 					<div className="page__row">
 						<div className="page__tit">Disable past or future</div>
-						<Multy
+						<DpMulty
 							value={dates.multy}
 							onChange={this.onChange('multy')}
 							disableFuture={true}

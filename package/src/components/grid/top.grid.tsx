@@ -5,8 +5,8 @@ interface Props {
     viewDate: moment.Moment
     onClickArr: (i: number) => () => void
     toggleView: () => void
-    leftBtn: React.ReactNode
-    rightBtn: React.ReactNode
+    leftBtn: React.ReactNode | string
+    rightBtn: React.ReactNode | string
 }
 
 class TopGrid extends React.Component<Props, {}> {

@@ -11,6 +11,9 @@ interface Props {
     onChange?: (value: string[]) => void
     disablePast?: boolean
     disableFuture?: boolean
+    leftBtn?: React.ReactNode | string
+    rightBtn?: React.ReactNode | string
+    separate?: React.ReactNode | string
 }
 
 interface State {
@@ -29,6 +32,7 @@ class InputRange extends React.Component<Props, State> {
         onChange: (value) => {},
         disablePast: false,
         disableFuture: false,
+        separate: '',
     }
 
     refElem: React.RefObject<HTMLDivElement> = React.createRef()
@@ -119,7 +123,7 @@ class InputRange extends React.Component<Props, State> {
     }
 
     render() {
-        let { showBtn, format, disableFuture, disablePast  } = this.props
+        let { showBtn, format, disableFuture, disablePast, leftBtn, rightBtn, separate } = this.props
         let { innerValue, popupHide, error } = this.state
         let date = this.getValidDate()
         return (
@@ -132,6 +136,7 @@ class InputRange extends React.Component<Props, State> {
                         onChange={this.onInputChange(0)}
                         onFocus={() => this.onTogglePopup(false)}
                     />
+                    {separate}
                     <input 
                         type="text"
                         placeholder={format}
@@ -156,6 +161,8 @@ class InputRange extends React.Component<Props, State> {
                         onChange={this.onGridChange}
                         disablePast={disableFuture}
                         disableFuture={disablePast}
+                        leftBtn={leftBtn}
+                        rightBtn={rightBtn}
                     />
                 </Popup>
             </div>
