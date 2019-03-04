@@ -53,34 +53,8 @@ class Icon extends React.Component<IIcon> {
 }
 
 enum IconList {
-// actions
-	ok = 'ok',
-	backArr = 'backArr',
-	search = 'search',
-	download = 'download',
-	plus = 'plus',
-	cross = 'cross',
 	arr = 'arr',
-	longArr = 'longArr',
-	arrow = 'arrow',
-	like = 'like',
-	comment = 'comment',
-	shared = 'shared',
-// object
-	home = 'home',
-	audio = 'audio',
-	folder = 'folder',
-	document = 'document',
-	documentPlus = 'documentPlus',
-	documentCross = 'documentCross',
-	avatar = 'avatar',
-	rocket = 'rocket',
 	calendar = 'calendar',
-	geo = 'geo',
-	star = 'star',
-	eye = 'eye',
-	phone = 'phone',
-	mail = 'mail',
 }
 
 export { IconList }
