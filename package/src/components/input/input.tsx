@@ -4,6 +4,7 @@ import { Single } from '../select'
 import Popup from '../popup/popup'
 
 interface Props {
+    className?: string
     value?: string
     format?: string
     showBtn?: React.ReactNode | string
@@ -24,6 +25,7 @@ interface State {
 class Input extends React.Component<Props, State> {
 
     static defaultProps = {
+        className: '',
         value: '',
         format: 'DD-MM-YYYY',
         showBtn: '#',
@@ -100,11 +102,11 @@ class Input extends React.Component<Props, State> {
     }
 
     render() {
-        let { showBtn, format, disableFuture, disablePast, leftBtn, rightBtn } = this.props
+        let { className, showBtn, format, disableFuture, disablePast, leftBtn, rightBtn } = this.props
         let { innerValue, popupHide, error } = this.state
         let date = this.getValidDate()
         return (
-            <div className="dp-input --single" ref={this.refElem}>
+            <div className={`dp-input --single ${className}`} ref={this.refElem}>
                 <div className={`dp-input__input ${error ? ' --error' : ''}`}>
                     <input 
                         type="text"

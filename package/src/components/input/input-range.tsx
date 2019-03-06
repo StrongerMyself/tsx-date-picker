@@ -4,6 +4,7 @@ import { Range } from '../select'
 import Popup from '../popup/popup'
 
 interface Props {
+    className?: string
     value?: string[]
     format?: string
     showBtn?: React.ReactNode | string
@@ -25,6 +26,7 @@ interface State {
 class InputRange extends React.Component<Props, State> {
 
     static defaultProps = {
+        className: '',
         value: [],
         format: 'DD-MM-YYYY',
         showBtn: '#',
@@ -123,11 +125,11 @@ class InputRange extends React.Component<Props, State> {
     }
 
     render() {
-        let { showBtn, format, disableFuture, disablePast, leftBtn, rightBtn, separate } = this.props
+        let { className, showBtn, format, disableFuture, disablePast, leftBtn, rightBtn, separate } = this.props
         let { innerValue, popupHide, error } = this.state
         let date = this.getValidDate()
         return (
-            <div className="dp-input --range" ref={this.refElem}>
+            <div className={`dp-input --range ${className}`} ref={this.refElem}>
                 <div className={`dp-input__input ${error ? ' --error' : ''}`}>
                     <input 
                         type="text"
