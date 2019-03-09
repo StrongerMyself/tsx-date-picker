@@ -10,6 +10,7 @@ interface Props {
     showBtn?: React.ReactNode | string
     autoHide?: boolean
     onChange?: (value: string[]) => void
+    onChangeAfterHide?: (value: string[]) => void
     disablePast?: boolean
     disableFuture?: boolean
     leftBtn?: React.ReactNode | string
@@ -32,6 +33,7 @@ class InputRange extends React.Component<Props, State> {
         showBtn: '#',
         autoHide: false,
         onChange: (value) => {},
+        onHide: (value) => {},
         disablePast: false,
         disableFuture: false,
         separate: '',
@@ -45,7 +47,25 @@ class InputRange extends React.Component<Props, State> {
         error: false,
     }
 
-    onChange = (innerValue: string[] = []) => {
+    onChange = (value: string[] = []) => {
+        let { innerValue, error } = this.prepareValue(value)
+        this.setState({ innerValue, error }, () => {
+            if (!error) {
+                this.props.onChange(innerValue)
+            }
+        })
+    }
+
+    onChangeAfterHide = (value: string[] = []) => {
+        let { innerValue, error } = this.prepareValue(value)
+        this.setState({ innerValue, error }, () => {
+            if (!error) {
+                this.props.onChangeAfterHide(innerValue)
+            }
+        })
+    }
+
+    prepareValue = (innerValue: string[] = []) => {
         let { error } = this.state
         let val_0 = innerValue[0] || ''
         let val_1 = innerValue[1] || ''
@@ -56,11 +76,7 @@ class InputRange extends React.Component<Props, State> {
             error = false
         }
         innerValue = error ? innerValue : this.sortValue([val_0, val_1])
-        this.setState({innerValue, error}, () => {
-            if (!error) {
-                this.props.onChange(innerValue)
-            }
-        })
+        return { innerValue, error }
     }
 
     sortValue = (value) => {
@@ -121,6 +137,9 @@ class InputRange extends React.Component<Props, State> {
     }
 
     onTogglePopup = (state = !this.state.popupHide) => {
+        if (state === true) {
+            this.onChangeAfterHide(this.state.innerValue)
+        }
         this.setState({popupHide: state})
     }
 

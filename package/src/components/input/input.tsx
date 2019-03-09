@@ -10,6 +10,7 @@ interface Props {
     showBtn?: React.ReactNode | string
     autoHide?: boolean
     onChange?: (value: string) => void
+    onChangeAfterHide?: (value: string) => void
     disablePast?: boolean
     disableFuture?: boolean
     leftBtn?: React.ReactNode | string
@@ -31,6 +32,7 @@ class Input extends React.Component<Props, State> {
         showBtn: '#',
         autoHide: false,
         onChange: (value) => {},
+        onChangeAfterHide: (value) => {},
         disablePast: false,
         disableFuture: false,
     }
@@ -43,7 +45,25 @@ class Input extends React.Component<Props, State> {
         error: false,
     }
 
-    onChange = (innerValue: string = '') => {
+    onChange = (value: string = '') => {
+        let { innerValue, error } = this.prepareValue(value)
+        this.setState({innerValue, error}, () => {
+            if (!error) {
+                this.props.onChange(innerValue)
+            }
+        })
+    }
+
+    onChangeAfterHide = (value: string = '') => {
+        let { innerValue, error } = this.prepareValue(value)
+        this.setState({innerValue, error}, () => {
+            if (!error) {
+                this.props.onChangeAfterHide(innerValue)
+            }
+        })
+    }
+    
+    prepareValue = (innerValue: string = '') => {
         let { error } = this.state
         if (innerValue !== '') {
             error = this.invalidInnerValue(innerValue)
@@ -51,11 +71,7 @@ class Input extends React.Component<Props, State> {
             innerValue = ''
             error = false
         }
-        this.setState({innerValue, error}, () => {
-            if (!error) {
-                this.props.onChange(innerValue)
-            }
-        })
+        return { innerValue, error }
     }
     
     invalidInnerValue = (value: string): boolean => {
@@ -98,6 +114,9 @@ class Input extends React.Component<Props, State> {
     }
 
     onTogglePopup = (state = !this.state.popupHide) => {
+        if (state === true) {
+            this.onChangeAfterHide(this.state.innerValue)
+        }
         this.setState({popupHide: state})
     }
 
