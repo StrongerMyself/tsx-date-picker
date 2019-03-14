@@ -32,7 +32,6 @@ class Input extends React.Component<Props, State> {
         showBtn: '#',
         autoHide: false,
         onChange: (value) => {},
-        onChangeAfterHide: (value) => {},
         disablePast: false,
         disableFuture: false,
     }
@@ -114,7 +113,8 @@ class Input extends React.Component<Props, State> {
     }
 
     onTogglePopup = (state = !this.state.popupHide) => {
-        if (state === true) {
+        let { onChangeAfterHide, autoHide} = this.props
+        if (state === true && !!onChangeAfterHide && autoHide === false) {
             this.onChangeAfterHide(this.state.innerValue)
         }
         this.setState({popupHide: state})
