@@ -117,7 +117,11 @@ class InputRange extends React.Component<Props, State> {
         let value_1 = date[1].format(format)
         this.onChange([value_0, value_1])
         if (autoHide) {
-            this.onTogglePopup(true)
+            if (value_0 !== value_1) {
+                setTimeout(() => {
+                    this.onTogglePopup(true)
+                }, 100)
+            }
         }
     }
 
@@ -137,8 +141,8 @@ class InputRange extends React.Component<Props, State> {
     }
 
     onTogglePopup = (state = !this.state.popupHide) => {
-        let { onChangeAfterHide, autoHide} = this.props
-        if (state === true && !!onChangeAfterHide && autoHide === false) {
+        let { onChangeAfterHide } = this.props
+        if (state === true && !!onChangeAfterHide) {
             this.onChangeAfterHide(this.state.innerValue)
         }
         this.setState({popupHide: state})

@@ -97,7 +97,9 @@ class Input extends React.Component<Props, State> {
         let value = date.format(format)
         this.onChange(value)
         if (autoHide) {
-            this.onTogglePopup(true)
+            setTimeout(() => {
+                this.onTogglePopup(true)
+            }, 100)
         }
     }
 
@@ -113,8 +115,8 @@ class Input extends React.Component<Props, State> {
     }
 
     onTogglePopup = (state = !this.state.popupHide) => {
-        let { onChangeAfterHide, autoHide} = this.props
-        if (state === true && !!onChangeAfterHide && autoHide === false) {
+        let { onChangeAfterHide } = this.props
+        if (state === true && !!onChangeAfterHide) {
             this.onChangeAfterHide(this.state.innerValue)
         }
         this.setState({popupHide: state})
