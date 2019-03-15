@@ -123,11 +123,9 @@ class InputRange extends React.Component<Props, State> {
         this.onChange([value_0, value_1])
         this.clickGridNum++
         if (autoHide && this.clickGridNum >= maxGridClick) {
-            if (value_0 !== value_1) {
-                setTimeout(() => {
-                    this.onTogglePopup(true)
-                }, 100)
-            }
+            setTimeout(() => {
+                this.onTogglePopup(true)
+            }, 100)
         }
     }
 
