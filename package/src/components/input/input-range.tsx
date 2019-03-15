@@ -15,6 +15,7 @@ interface Props {
     disableFuture?: boolean
     leftBtn?: React.ReactNode | string
     rightBtn?: React.ReactNode | string
+    resetBtn?: React.ReactNode | string
     separate?: React.ReactNode | string
 }
 
@@ -148,8 +149,19 @@ class InputRange extends React.Component<Props, State> {
         this.setState({popupHide: state})
     }
 
+    onClickReset = (e) => {
+        e.preventDefault()
+        let innerValue = ['', '']
+        this.setState({ innerValue, error: false, popupHide: true }, () => {
+            this.props.onChange(innerValue)
+            setTimeout(() => {
+                this.setState({popupHide: true })
+            }, 100)
+        })
+    }
+
     render() {
-        let { className, showBtn, format, disableFuture, disablePast, leftBtn, rightBtn, separate } = this.props
+        let { className, showBtn, format, disableFuture, disablePast, leftBtn, rightBtn, resetBtn, separate } = this.props
         let { innerValue, popupHide, error } = this.state
         let date = this.getValidDate()
         return (
@@ -176,6 +188,14 @@ class InputRange extends React.Component<Props, State> {
                     >
                         {showBtn}
                     </div>
+                    {(resetBtn && date && (date[0] || date[1])) && (
+                        <div
+                            className="dp-input__reset"
+                            onClick={this.onClickReset}
+                        >
+                            {resetBtn}
+                        </div>
+                    )}
                 </div>
                 <Popup
                     refWrap={this.refElem}
