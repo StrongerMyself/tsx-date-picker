@@ -17,6 +17,7 @@ interface Props {
     rightBtn?: React.ReactNode | string
     resetBtn?: React.ReactNode | string
     separate?: React.ReactNode | string
+    maxGridClick?: number
 }
 
 interface State {
@@ -38,9 +39,12 @@ class InputRange extends React.Component<Props, State> {
         disablePast: false,
         disableFuture: false,
         separate: '',
+        maxGridClick: 2
     }
 
     refElem: React.RefObject<HTMLDivElement> = React.createRef()
+
+    clickGridNum: number = 0
 
     state = {
         innerValue: this.props.value,
@@ -113,11 +117,12 @@ class InputRange extends React.Component<Props, State> {
     }
 
     onGridChange = (date: moment.Moment[]) => {
-        let { format, autoHide } = this.props
+        let { format, autoHide, maxGridClick } = this.props
         let value_0 = date[0].format(format)
         let value_1 = date[1].format(format)
         this.onChange([value_0, value_1])
-        if (autoHide) {
+        this.clickGridNum++
+        if (autoHide && this.clickGridNum >= maxGridClick) {
             if (value_0 !== value_1) {
                 setTimeout(() => {
                     this.onTogglePopup(true)
@@ -146,6 +151,7 @@ class InputRange extends React.Component<Props, State> {
         if (state === true && !!onChangeAfterHide) {
             this.onChangeAfterHide(this.state.innerValue)
         }
+        this.clickGridNum = state ? 0 : this.clickGridNum
         this.setState({popupHide: state})
     }
 
@@ -155,7 +161,7 @@ class InputRange extends React.Component<Props, State> {
         this.setState({ innerValue, error: false, popupHide: true }, () => {
             this.props.onChange(innerValue)
             setTimeout(() => {
-                this.setState({popupHide: true })
+                this.onTogglePopup(true)
             }, 100)
         })
     }
