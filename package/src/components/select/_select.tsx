@@ -66,10 +66,10 @@ export class Component<P extends Props<V>, S, V> extends React.Component<P, S> i
     }
 
     resetElem = (elem: Element) => {
-        elem.classList.remove('--select')
-        elem.classList.remove('--single')
-        elem.classList.remove('--first')
-        elem.classList.remove('--last')
+        elem.classList.remove('select')
+        elem.classList.remove('single')
+        elem.classList.remove('first')
+        elem.classList.remove('last')
     }
 
     render() {

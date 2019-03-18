@@ -31,10 +31,10 @@ class DpSingleInput extends React.Component<Props, {}> {
 					<Icon icon={IconList.calendar}/>
 				}
 				leftBtn={
-					<Icon className="--left" icon={IconList.arr}/>
+					<Icon className="left" icon={IconList.arr}/>
 				}
 				rightBtn={
-					<Icon className="--right" icon={IconList.arr}/>
+					<Icon className="right" icon={IconList.arr}/>
 				}
 			/>
 		)

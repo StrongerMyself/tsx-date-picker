@@ -10,7 +10,7 @@ interface Props extends Select.Props<Value> {}
 class Range extends Select.Component<Props, null, Value> implements Select.Interface<Value> {
 
     initDate = moment.isMoment(this.props.value[0]) ? moment(this.props.value[0]) : null
-    prefix  = '--range'
+    prefix  = 'range'
 
     componentDidUpdate(prevProps) {
         let { value } = this.props
@@ -83,13 +83,13 @@ class Range extends Select.Component<Props, null, Value> implements Select.Inter
             let dateObj = moment(dayElem.getAttribute('data-date'))
             let isBetween = (from && to && dateObj.isBetween(from, to, 'days', '[]'))
             if (isBetween) {
-                dayElem.classList.add('--select')
+                dayElem.classList.add('select')
                 selectDays.push(dayElem)
             }
         }
         let len = selectDays.length
         if (len === 1) {
-            selectDays[0].classList.add('--single')
+            selectDays[0].classList.add('single')
         } else if (len > 1) {
             let fromElem = selectDays[0]
             let toElem = selectDays[len - 1]
@@ -101,10 +101,10 @@ class Range extends Select.Component<Props, null, Value> implements Select.Inter
             let toDateStr = to ? to.format('YYYY-MM-DD') : ''
 
             if (fromElemDate === fromDateStr) {
-                fromElem.classList.add('--first')
+                fromElem.classList.add('first')
             }
             if (toElemDate === toDateStr) {
-                toElem.classList.add('--last')
+                toElem.classList.add('last')
             }
         }
     }

@@ -106,8 +106,8 @@ export class Component extends React.Component<Props, State> {
         
         let notClick = (otherDay || pastState || futureState)
 
-        if (nowState) className += ' --now'
-        if (notClick) className += ' --hide'
+        if (nowState) className += ' now'
+        if (notClick) className += ' hide'
 
         return { className, notClick }
     }
@@ -148,9 +148,9 @@ export class Component extends React.Component<Props, State> {
         let className = 'dp-block'
         let { layer } = this.state
         let { prefix } = this.props
-        if (prefix) className += ` ${prefix}`
-        if (layer === Layers.day) className += ' --dayLayer'
-        if (layer === Layers.month) className += ' --monthLayer'
+        if (prefix) className += ` dp-block--${prefix}`
+        if (layer === Layers.day) className += ' dp-block--dayLayer'
+        if (layer === Layers.month) className += ' dp-block--monthLayer'
         return className
     }
 

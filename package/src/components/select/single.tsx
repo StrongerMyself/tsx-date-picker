@@ -10,7 +10,7 @@ interface Props extends Select.Props<Value> {}
 class Single extends Select.Component<Props, null, Value> implements Select.Interface<Value> {
 
     initDate = this.props.value !== null ? moment(this.props.value) : null
-    prefix = '--single'
+    prefix = 'single'
 
     componentDidUpdate(prevProps) {
         let { value } = this.props
@@ -58,7 +58,7 @@ class Single extends Select.Component<Props, null, Value> implements Select.Inte
             this.resetElem(dayElem)
             let dayDateStr = dayElem.getAttribute('data-date')
             if (dayDateStr === dateStr) {
-                dayElem.classList.add('--select')
+                dayElem.classList.add('select')
                 selectDays.push(dayElem)
             }
         }

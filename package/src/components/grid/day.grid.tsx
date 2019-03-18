@@ -69,7 +69,7 @@ class DayGrid extends React.Component<Props, {}> {
 
     render() {
         return (
-            <div ref={this.refWrap} className="dp-block__row --days">
+            <div ref={this.refWrap} className="dp-block__row dp-block__row--days">
                 {this.renderMonth()}
             </div>
         )

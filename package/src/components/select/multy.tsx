@@ -10,7 +10,7 @@ interface Props extends Select.Props<Value> {}
 class Multy extends Select.Component<Props, null, Value> implements Select.Interface<Value> {
 
     initDate = moment.isMoment(this.props.value[0]) ? moment(this.props.value[0]) : null
-    prefix = '--multy'
+    prefix = 'multy'
     
     onSelect = (date = null, isChange = true) => {
         let refDays = this.refDays.current
@@ -60,7 +60,7 @@ class Multy extends Select.Component<Props, null, Value> implements Select.Inter
             let dayDateStr = dayElem.getAttribute('data-date')
             let isFindDate = dateStr.find(el => el === dayDateStr)
             if (isFindDate) {
-                dayElem.classList.add('--select')
+                dayElem.classList.add('select')
                 selectDays.push(dayElem)
             }
         }

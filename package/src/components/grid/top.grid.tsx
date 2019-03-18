@@ -29,8 +29,8 @@ class TopGrid extends React.Component<Props, {}> {
                     {leftBtn}
                 </div>
                 <div onClick={() => toggleView()}>
-                    <div className="dp-blockTop__tit --dayLayer">{monthStr} {year}</div>
-                    <div className="dp-blockTop__tit --monthLayer">{year}</div>
+                    <div className="dp-blockTop__tit dp-blockTop__tit--dayLayer">{monthStr} {year}</div>
+                    <div className="dp-blockTop__tit dp-blockTop__tit--monthLayer">{year}</div>
                 </div>
                 <div className="dp-blockTop__arr" onClick={onClickArr(1)}>
                     {rightBtn}

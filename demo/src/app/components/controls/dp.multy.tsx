@@ -29,10 +29,10 @@ class DpMulty extends React.Component<Props, {}> {
 				disablePast={disablePast}
 				disableFuture={disableFuture}
 				leftBtn={
-					<Icon className="--left" icon={IconList.arr}/>
+					<Icon className="left" icon={IconList.arr}/>
 				}
 				rightBtn={
-					<Icon className="--right" icon={IconList.arr}/>
+					<Icon className="right" icon={IconList.arr}/>
 				}
 			/>
 		)
