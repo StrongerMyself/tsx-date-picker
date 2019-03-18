@@ -55,7 +55,7 @@ class Popup extends React.Component<Props, State> {
     get className() {
         let { hide } = this.props
         let str = 'dp-popup'
-        str += (hide) ? ' --hide' : ' --show'
+        str += (hide) ? ' dp-popup--hide' : ' dp-popup--show'
         return str
     }
 

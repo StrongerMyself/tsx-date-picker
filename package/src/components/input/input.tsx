@@ -139,8 +139,8 @@ class Input extends React.Component<Props, State> {
         let { innerValue, popupHide, error } = this.state
         let date = this.getValidDate()
         return (
-            <div className={`dp-input --single ${className}`} ref={this.refElem}>
-                <div className={`dp-input__input ${error ? ' --error' : ''}`}>
+            <div className={`dp-input dp-input--single ${className}`} ref={this.refElem}>
+                <div className={`dp-input__input ${error ? ' dp-input__input--error' : ''}`}>
                     <input 
                         type="text"
                         placeholder={format}
